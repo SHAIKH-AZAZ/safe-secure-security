@@ -1,0 +1,266 @@
+.hero {
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 80px 0;
+}
+
+.heroAlert {
+  background: linear-gradient(180deg, #130d0d 0%, var(--bg-primary) 100%);
+  border-bottom-color: rgba(180, 79, 79, 0.2);
+}
+
+.heroTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border: 1px solid var(--gold-border);
+  background: var(--gold-glow);
+  margin-bottom: 20px;
+}
+
+.heroTagAlert {
+  color: #df8d8d;
+  background: rgba(180, 79, 79, 0.08);
+  border-color: rgba(180, 79, 79, 0.28);
+}
+
+.heroTitle {
+  font-size: clamp(40px, 6vw, 66px);
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  line-height: 0.98;
+  margin-bottom: 20px;
+}
+
+.heroTitle span {
+  color: var(--gold);
+}
+
+.heroTitleAlert span {
+  color: #d57b7b;
+}
+
+.heroDescription {
+  max-width: 620px;
+  font-size: 16px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.section {
+  background: var(--bg-secondary);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 48px;
+  align-items: start;
+}
+
+.formCard,
+.panel,
+.successCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+}
+
+.formCard {
+  padding: 32px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.wide {
+  grid-column: 1 / -1;
+}
+
+.sectionHeading {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+
+.sectionHeading h2 {
+  font-size: 30px;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+}
+
+.sectionHeading p {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.helper {
+  font-size: 11px;
+  color: var(--text-dimmed);
+  line-height: 1.6;
+}
+
+.submit {
+  width: 100%;
+}
+
+.sidebar {
+  position: sticky;
+  top: calc(var(--header-h) + 28px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.panel {
+  padding: 24px;
+}
+
+.panel h3 {
+  font-size: 18px;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.panel p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.contactList,
+.expectationList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.contactItem svg {
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.expectationItem {
+  padding-left: 12px;
+  border-left: 1px solid var(--gold-border);
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.notePanel {
+  border-color: rgba(184, 151, 58, 0.24);
+}
+
+.notePanel p {
+  color: var(--text-secondary);
+}
+
+.alertPanel {
+  border-color: rgba(180, 79, 79, 0.24);
+}
+
+.successCard {
+  padding: 40px 32px;
+  text-align: center;
+}
+
+.successBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 20px;
+  background: var(--gold-glow);
+  border: 1px solid var(--gold-border);
+  color: var(--gold);
+}
+
+.successCard h2 {
+  font-size: 32px;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.successCard p {
+  max-width: 520px;
+  margin: 0 auto 20px;
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.alertCallout {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #d57b7b;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+@media (max-width: 1024px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 64px 0;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .formCard,
+  .panel,
+  .successCard {
+    padding: 24px 20px;
+  }
+
+  .heroActions {
+    flex-direction: column;
+  }
+}

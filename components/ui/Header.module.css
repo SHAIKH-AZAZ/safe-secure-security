@@ -1,0 +1,188 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(13, 14, 16, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+  height: var(--header-h);
+}
+
+.header.scrolled {
+  box-shadow: 0 4px 32px rgba(0,0,0,0.5);
+  border-bottom-color: var(--border-card);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 32px;
+}
+
+/* ─── LOGO ───────────────────────────────────────────────────── */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logoIcon {
+  color: var(--gold);
+}
+
+.logoText {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+}
+
+.logoSub {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  margin-top: 2px;
+  align-self: flex-end;
+}
+
+/* ─── NAV LINKS ──────────────────────────────────────────────── */
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  justify-content: center;
+}
+
+.navLink {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 6px 12px;
+  position: relative;
+  transition: color 0.2s;
+}
+
+.navLink::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 12px;
+  right: 12px;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transition: transform 0.25s var(--ease);
+}
+
+.navLink:hover {
+  color: var(--text-primary);
+}
+
+.navLink:hover::after {
+  transform: scaleX(1);
+}
+
+/* ─── CTAs ───────────────────────────────────────────────────── */
+.ctas {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.callNow {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+
+.callNow:hover { color: var(--gold); }
+
+.ctaBtn {
+  font-size: 12px;
+  padding: 9px 18px;
+}
+
+/* ─── HAMBURGER ──────────────────────────────────────────────── */
+.hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  padding: 4px;
+  transition: color 0.2s;
+  margin-left: auto;
+}
+
+.hamburger:hover { color: var(--gold); }
+
+/* ─── MOBILE MENU ────────────────────────────────────────────── */
+.mobileMenu {
+  position: fixed;
+  inset: calc(var(--utility-h) + var(--header-h)) 0 0 0;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-card);
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  overflow-y: auto;
+  z-index: 49;
+  animation: fadeInUp 0.2s var(--ease-out);
+}
+
+.mobileLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mobileLink {
+  display: block;
+  font-size: 20px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: color 0.2s;
+}
+
+.mobileLink:hover { color: var(--gold); }
+
+.mobileCtas {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .nav { gap: 16px; }
+  .navLinks { gap: 0; }
+  .navLink { padding: 6px 8px; font-size: 11px; }
+}
+
+@media (max-width: 768px) {
+  .navLinks,
+  .ctas { display: none; }
+  .hamburger { display: flex; }
+}

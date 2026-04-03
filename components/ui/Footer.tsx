@@ -1,0 +1,143 @@
+import Link from 'next/link';
+import {
+  IconArrowRight,
+  IconClock,
+  IconEmail,
+  IconLocation,
+  IconPhone,
+  IconShield,
+  IconWhatsapp,
+} from '@/components/icons';
+import { CITIES } from '@/lib/constants';
+import { SITE } from '@/lib/site';
+import styles from './Footer.module.css';
+
+const SERVICE_LINKS = [
+  { label: 'Executive Protection', href: '/executive-protection' },
+  { label: 'Event & Venue Security', href: '/event-venue-security' },
+  { label: 'Corporate & Property Guarding', href: '/corporate-property' },
+  { label: 'Emergency Desk', href: '/emergency' },
+  { label: 'Coverage Map', href: '/coverage' },
+  { label: 'Request Quote', href: '/contact' },
+];
+
+const COMPANY_LINKS = [
+  { label: `About ${SITE.shortName}`, href: '/about' },
+  { label: 'Why Choose Us', href: '/about#why-us' },
+  { label: 'Case Studies', href: '/case-studies' },
+  { label: 'Coverage Areas', href: '/coverage' },
+  { label: 'Careers', href: '/careers' },
+  { label: 'FAQ', href: '/faq' },
+];
+
+const LEGAL_LINKS = [
+  { label: 'Privacy Policy', href: '/privacy' },
+  { label: 'Terms of Service', href: '/terms' },
+];
+
+export default function Footer() {
+  const year = new Date().getFullYear();
+
+  return (
+    <footer className={styles.footer}>
+      <div className={styles.goldLine} />
+
+      <div className={`container ${styles.grid}`}>
+        <div className={styles.brandCol}>
+          <Link href="/" className={styles.logo} aria-label={`${SITE.name} home`}>
+            <IconShield size={28} className={styles.logoIcon} />
+            <div>
+              <span className={styles.logoName}>SENTINEL</span>
+              <span className={styles.logoSub}>SECURITY</span>
+            </div>
+          </Link>
+
+          <p className={styles.tagline}>{SITE.tagline}</p>
+
+          <div className={styles.contactItems}>
+            <a href={SITE.phoneHref} className={styles.contactItem}>
+              <IconPhone size={14} />
+              {SITE.phoneDisplay}
+            </a>
+            <a href={SITE.whatsappUrl} className={styles.contactItem} target="_blank" rel="noopener noreferrer">
+              <IconWhatsapp size={14} />
+              WhatsApp intake
+            </a>
+            <a href={`mailto:${SITE.email}`} className={styles.contactItem}>
+              <IconEmail size={14} />
+              {SITE.email}
+            </a>
+          </div>
+
+          <div className={styles.responseBadge}>
+            <IconClock size={12} />
+            {SITE.emergencyLabel}
+          </div>
+        </div>
+
+        <div>
+          <h3 className={styles.colTitle}>Services</h3>
+          <ul className={styles.linkList}>
+            {SERVICE_LINKS.map((link) => (
+              <li key={link.label}>
+                <Link href={link.href} className={styles.footerLink}>
+                  <IconArrowRight size={12} />
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h3 className={styles.colTitle}>Company</h3>
+          <ul className={styles.linkList}>
+            {COMPANY_LINKS.map((link) => (
+              <li key={link.label}>
+                <Link href={link.href} className={styles.footerLink}>
+                  <IconArrowRight size={12} />
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h3 className={styles.colTitle}>Coverage Footprint</h3>
+          <ul className={styles.cityList}>
+            {CITIES.map((city) => (
+              <li key={city.name} className={styles.cityItem}>
+                <span className={styles.cityDot} />
+                <span>{city.name}</span>
+                <span className={styles.responseTime}>{city.coverageLabel}</span>
+              </li>
+            ))}
+          </ul>
+          <Link href="/coverage" className={styles.coverageLink}>
+            View coverage map
+          </Link>
+        </div>
+      </div>
+
+      <div className={styles.bottomBar}>
+        <div className={`container ${styles.bottomInner}`}>
+          <span className={styles.copyright}>© {year} {SITE.name}. All rights reserved.</span>
+
+          <div className={styles.legalLinks}>
+            {LEGAL_LINKS.map((link) => (
+              <Link key={link.label} href={link.href} className={styles.legalLink}>
+                {link.label}
+              </Link>
+            ))}
+          </div>
+
+          <div className={styles.locationNote}>
+            <IconLocation size={12} />
+            Placeholder Indian metro footprint. Verify before launch.
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}

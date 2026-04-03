@@ -1,0 +1,230 @@
+.footer {
+  background: #0a0b0d;
+  border-top: 1px solid var(--border-subtle);
+  margin-top: auto;
+}
+
+.goldLine {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--gold-dim) 30%, var(--gold) 50%, var(--gold-dim) 70%, transparent 100%);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
+  gap: 48px;
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+/* ─── BRAND ──────────────────────────────────────────────────── */
+.brandCol {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.logoIcon { color: var(--gold); }
+
+.logoName {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.logoSub {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+}
+
+.tagline {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.contactItems {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+
+.contactItem:hover { color: var(--gold); }
+.contactItem svg { color: var(--gold-dim); flex-shrink: 0; }
+
+.responseBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: 5px 10px;
+  border: 1px solid var(--gold-border);
+  background: var(--gold-glow);
+  width: fit-content;
+}
+
+/* ─── COLUMNS ────────────────────────────────────────────────── */
+.colTitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+.linkList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footerLink {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+
+.footerLink svg { color: var(--gold-dim); opacity: 0; transition: opacity 0.2s; }
+
+.footerLink:hover {
+  color: var(--text-secondary);
+}
+
+.footerLink:hover svg { opacity: 1; }
+
+/* ─── CITIES ─────────────────────────────────────────────────── */
+.cityList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.cityItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.cityDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold-dim);
+  flex-shrink: 0;
+}
+
+.responseTime {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--text-dimmed);
+  text-align: right;
+  max-width: 120px;
+}
+
+.coverageLink {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+
+.coverageLink:hover { color: var(--gold-lt); }
+
+/* ─── BOTTOM BAR ─────────────────────────────────────────────── */
+.bottomBar {
+  border-top: 1px solid var(--border-subtle);
+  padding: 16px 0;
+}
+
+.bottomInner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.copyright {
+  font-size: 12px;
+  color: var(--text-dimmed);
+  flex: 1;
+}
+
+.legalLinks {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.legalLink {
+  font-size: 12px;
+  color: var(--text-dimmed);
+  transition: color 0.2s;
+}
+
+.legalLink:hover { color: var(--text-secondary); }
+
+.locationNote {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--text-dimmed);
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  .brandCol { grid-column: 1 / -1; }
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+  .brandCol { grid-column: auto; }
+  .bottomInner { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .legalLinks { gap: 12px; flex-wrap: wrap; }
+}

@@ -1,0 +1,102 @@
+.panel {
+  background:
+    radial-gradient(circle at top right, rgba(184, 151, 58, 0.12), transparent 32%),
+    linear-gradient(180deg, #15171a 0%, #111315 100%);
+  border: 1px solid var(--gold-border);
+  padding: 24px;
+  overflow: hidden;
+  position: relative;
+}
+
+.panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(184, 151, 58, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(184, 151, 58, 0.04) 1px, transparent 1px);
+  background-size: 42px 42px;
+  pointer-events: none;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  font-family: var(--font-display), sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.copy {
+  max-width: 440px;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text-dimmed);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.legendDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 4px rgba(184, 151, 58, 0.16);
+}
+
+.svg {
+  width: 100%;
+  height: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.connection {
+  stroke: rgba(184, 151, 58, 0.28);
+  stroke-width: 1.5;
+}
+
+.nodeRing {
+  fill: rgba(184, 151, 58, 0.08);
+  stroke: rgba(184, 151, 58, 0.24);
+}
+
+.nodeCore {
+  fill: var(--gold);
+}
+
+.label {
+  fill: var(--text-primary);
+  font-size: 12px;
+  letter-spacing: 0.03em;
+}
+
+.subLabel {
+  fill: var(--text-dimmed);
+  font-size: 10px;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+  }
+
+  .panel {
+    padding: 20px 16px;
+  }
+}
