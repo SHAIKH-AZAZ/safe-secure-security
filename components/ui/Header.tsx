@@ -33,8 +33,8 @@ export default function Header() {
       <nav className={`container ${styles.nav}`} aria-label="Main navigation">
         <Link href="/" className={styles.logo} aria-label={`${SITE.name} home`}>
           <IconShield size={26} className={styles.logoIcon} />
-          <span className={styles.logoText}>SENTINEL</span>
-          <span className={styles.logoSub}>SECURITY</span>
+          <span className={styles.logoText}>SAFE</span>
+          <span className={styles.logoSub}>& SECURITY SERVICE</span>
         </Link>
 
         <ul className={styles.navLinks} role="list">

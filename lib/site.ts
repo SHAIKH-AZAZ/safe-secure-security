@@ -1,18 +1,18 @@
 import type { Metadata } from 'next';
 
 export const SITE = {
-  name: 'Sentinel Security',
-  legalName: 'Sentinel Security',
-  shortName: 'Sentinel',
-  url: 'https://sentinelsecurity.example',
-  email: 'ops@sentinelsecurity.example',
-  careersEmail: 'careers@sentinelsecurity.example',
+  name: 'Safe & Security Service',
+  legalName: 'Safe & Security Service',
+  shortName: 'Safe',
+  url: 'https://safesecurityservice.example',
+  email: 'ops@safesecurityservice.example',
+  careersEmail: 'careers@safesecurityservice.example',
   phoneDisplay: '+91 9978688882',
   phoneHref: 'tel:+919978688882',
   phoneRaw: '+919978688882',
   whatsappUrl: 'https://wa.me/919978688882',
   locale: 'en_IN',
-  defaultTitle: 'Sentinel Security | Executive Protection, Event Security, and Site Guarding',
+  defaultTitle: 'Safe & Security Service | Executive Protection, Event Security, and Site Guarding',
   tagline: 'Disciplined protection. Measured response. Discreet execution.',
   description:
     'Premium executive protection, event security, and property guarding for leaders, venues, and high-value sites across key Indian metros.',
