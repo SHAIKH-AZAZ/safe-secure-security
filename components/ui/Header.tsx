@@ -34,7 +34,7 @@ export default function Header() {
       <nav className={`container ${styles.nav}`} aria-label="Main navigation">
         <Link href="/" className={styles.logo} aria-label={`${SITE.name} home`}>
           <Image
-            src="/logo.png"
+            src="/logo_back.png"
             alt={`${SITE.name} logo`}
             width={837}
             height={365}
