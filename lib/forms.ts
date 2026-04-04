@@ -184,7 +184,7 @@ export const EMERGENCY_REQUIRED_FIELDS: LeadFormKey[] = [
   'preferred_contact_method',
 ];
 
-const PHONE_PATTERN = /^[0-9+()\-\s]{7,}$/;
+const INDIA_PHONE_PATTERN = /^(?:\+91[\s-]?[6-9]\d{9}|[6-9]\d{9})$/;
 
 export function validateLeadForm(
   form: LeadFormState,
@@ -198,8 +198,10 @@ export function validateLeadForm(
     }
   });
 
-  if (form.phone && !PHONE_PATTERN.test(form.phone)) {
-    errors.phone = 'Enter a valid phone number.';
+  const normalizedPhone = form.phone.replace(/\s+/g, '').replace(/-/g, '');
+
+  if (form.phone && !INDIA_PHONE_PATTERN.test(normalizedPhone)) {
+    errors.phone = 'Enter a valid Indian mobile number using +91XXXXXXXXXX or 10 digits.';
   }
 
   if (form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
