@@ -157,7 +157,7 @@ export default function HeroSection() {
 
           <p className={styles.subheadline}>
             Sentinel Security supports executives, events, and high-value properties with
-            brief-led planning, discreet teams, and measured response across key Indian metros.
+            brief-led planning, discreet teams, and measured response across Gujarat.
           </p>
 
           <div className={styles.ctaGroup}>
@@ -265,7 +265,7 @@ export default function HeroSection() {
                       onChange={(event) => updateField('city', event.target.value)}
                       aria-invalid={errors.city ? 'true' : 'false'}
                     >
-                      <option value="">Select metro area</option>
+                      <option value="">Select city or district in Gujarat</option>
                       {CITY_OPTIONS.map((city) => (
                         <option key={city} value={city}>{city}</option>
                       ))}
@@ -429,7 +429,7 @@ export default function HeroSection() {
                         onChange={(event) => updateField('city', event.target.value)}
                         aria-invalid={errors.city ? 'true' : 'false'}
                       >
-                        <option value="">Select metro area</option>
+                        <option value="">Select city or district in Gujarat</option>
                         {CITY_OPTIONS.map((city) => (
                           <option key={city} value={city}>{city}</option>
                         ))}

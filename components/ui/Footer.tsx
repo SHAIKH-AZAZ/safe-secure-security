@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import {
   IconArrowRight,
@@ -5,7 +6,6 @@ import {
   IconEmail,
   IconLocation,
   IconPhone,
-  IconShield,
   IconWhatsapp,
 } from '@/components/icons';
 import { CITIES } from '@/lib/constants';
@@ -45,11 +45,13 @@ export default function Footer() {
       <div className={`container ${styles.grid}`}>
         <div className={styles.brandCol}>
           <Link href="/" className={styles.logo} aria-label={`${SITE.name} home`}>
-            <IconShield size={28} className={styles.logoIcon} />
-            <div>
-              <span className={styles.logoName}>SENTINEL</span>
-              <span className={styles.logoSub}>SECURITY</span>
-            </div>
+            <Image
+              src="/logo_back.png"
+              alt={`${SITE.name} logo`}
+              width={837}
+              height={365}
+              className={styles.logoImage}
+            />
           </Link>
 
           <p className={styles.tagline}>{SITE.tagline}</p>
@@ -153,7 +155,7 @@ export default function Footer() {
 
           <div className={styles.locationNote}>
             <IconLocation size={12} />
-            Placeholder Indian metro footprint. Verify before launch.
+            Gujarat-wide coverage planning and deployment support.
           </div>
         </div>
       </div>

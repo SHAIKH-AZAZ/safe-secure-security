@@ -8,6 +8,7 @@ import {
   APPEARANCE_OPTIONS,
   CITY_OPTIONS,
   CLIENT_SEGMENT_OPTIONS,
+  CONTACT_REQUIRED_FIELDS,
   CONTACT_METHOD_OPTIONS,
   type LeadFormKey,
   mergeLeadForm,
@@ -39,16 +40,6 @@ const INITIAL_FORM: LeadFormState = {
   urgency_level: URGENCY_OPTIONS[0],
 };
 
-const REQUIRED_FIELDS: LeadFormKey[] = [
-  'name',
-  'phone',
-  'service_type',
-  'client_segment',
-  'city',
-  'urgency_level',
-  'preferred_contact_method',
-];
-
 function FieldError({ field, errors }: { field: LeadFormKey; errors: LeadFormErrors }) {
   if (!errors[field]) {
     return null;
@@ -63,6 +54,8 @@ export default function ContactPageClient() {
   const [errors, setErrors] = useState<LeadFormErrors>({});
   const [submitted, setSubmitted] = useState(false);
   const [prefilled, setPrefilled] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   useEffect(() => {
     if (prefilled) {
@@ -81,19 +74,43 @@ export default function ContactPageClient() {
   const updateField = (field: LeadFormKey, value: string) => {
     setForm((current) => ({ ...current, [field]: value }));
     setErrors((current) => ({ ...current, [field]: undefined }));
+    setSubmitError(null);
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const nextErrors = validateLeadForm(form, REQUIRED_FIELDS);
+    const nextErrors = validateLeadForm(form, CONTACT_REQUIRED_FIELDS);
 
     if (Object.keys(nextErrors).length > 0) {
       setErrors(nextErrors);
       return;
     }
 
-    setSubmitted(true);
+    setSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
+      });
+
+      const result = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Unable to submit the request right now.');
+      }
+
+      setSubmitted(true);
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'Unable to submit the request right now.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -129,9 +146,8 @@ export default function ContactPageClient() {
                   </div>
                   <h2>Request captured</h2>
                   <p>
-                    The draft quote request has been validated client-side. Connect this form to your
-                    CRM, email workflow, or webhook before launch so submissions are delivered to the
-                    operations team.
+                    Your request has been sent to the operations inbox. The team can now review the
+                    brief and follow up using your preferred contact method.
                   </p>
                   <Link href="/" className="btn btn-outline">
                     Return to home
@@ -233,7 +249,7 @@ export default function ContactPageClient() {
                           onChange={(event) => updateField('city', event.target.value)}
                           aria-invalid={errors.city ? 'true' : 'false'}
                         >
-                          <option value="">Select metro area</option>
+                          <option value="">Select city or district in Gujarat</option>
                           {CITY_OPTIONS.map((option) => (
                             <option key={option} value={option}>{option}</option>
                           ))}
@@ -369,15 +385,16 @@ export default function ContactPageClient() {
                     </div>
 
                     <p className={styles.helper}>
-                      This form currently validates in the browser only. Wire it to your CRM, inbox,
-                      or automation layer before launch. By submitting, you agree to the{' '}
+                      By submitting, you agree to the{' '}
                       <Link href="/privacy" style={{ color: 'var(--gold)' }}>
                         privacy policy
                       </Link>.
                     </p>
 
-                    <button type="submit" className={`btn btn-primary ${styles.submit}`}>
-                      Submit Security Request
+                    {submitError ? <p className={styles.errorText}>{submitError}</p> : null}
+
+                    <button type="submit" className={`btn btn-primary ${styles.submit}`} disabled={submitting}>
+                      {submitting ? 'Sending Request...' : 'Submit Security Request'}
                       <IconArrowRight size={16} />
                     </button>
                   </form>

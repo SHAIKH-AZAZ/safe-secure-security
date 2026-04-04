@@ -232,7 +232,7 @@ export const FAQS: FaqItem[] = [
     id: 'deployment-speed',
     question: 'How quickly can Sentinel deploy a team?',
     answer:
-      'Planned assignments usually begin after a consultation, scope review, and security plan sign-off. For urgent briefs, our operations desk can advise on the fastest available deployment window by city and staffing type.',
+      'Planned assignments usually begin after a consultation, scope review, and security plan sign-off. For urgent briefs, our operations desk can advise on the fastest available deployment window anywhere in Gujarat based on staffing type and travel requirements.',
   },
   {
     id: 'staff-mix',
@@ -256,7 +256,7 @@ export const FAQS: FaqItem[] = [
     id: 'coverage',
     question: 'Which cities do you currently cover?',
     answer:
-      'Our placeholder launch footprint covers key Indian metros including Mumbai, Delhi NCR, Bengaluru, Hyderabad, Chennai, Pune, and Ahmedabad. Final launch coverage should be verified before publishing.',
+      'We provide coverage across Gujarat, including Ahmedabad, Surat, Vadodara, Rajkot, Gandhinagar, and surrounding districts. Share the exact location and assignment brief, and we will confirm deployment planning accordingly.',
   },
   {
     id: 'pricing',
@@ -298,9 +298,9 @@ export const PROOF_PILLARS: ProofPillar[] = [
   {
     id: 'coverage',
     title: 'Coverage',
-    label: 'Metro-ready, travel-capable',
+    label: 'Gujarat-wide, travel-capable',
     points: [
-      'Coverage plans built around key Indian metros and inter-city travel corridors',
+      'Coverage plans built for deployments across Gujarat and inter-city travel within the state',
       'Support for executive movement, venue operations, and fixed-site guarding',
       'Flexible staffing for day rates, events, or recurring site needs',
       'A single point of contact for planning and operational updates',
@@ -352,15 +352,16 @@ export const PROCESS_STEPS: ProcessStep[] = [
   },
 ];
 
-// Placeholder launch footprint for staging only. [Verify before launch]
+// Gujarat coverage footprint used across the site.
 export const CITIES: City[] = [
-  { name: 'Ahmedabad', region: 'West', coverageLabel: 'Regional command point', x: 180, y: 170 },
-  { name: 'Mumbai', region: 'West', coverageLabel: 'Core metro coverage', x: 210, y: 240 },
-  { name: 'Pune', region: 'West', coverageLabel: 'Corporate and estate coverage', x: 250, y: 255 },
-  { name: 'Delhi NCR', region: 'North', coverageLabel: 'Core metro coverage', x: 330, y: 90 },
-  { name: 'Hyderabad', region: 'South Central', coverageLabel: 'Regional command point', x: 360, y: 250 },
-  { name: 'Bengaluru', region: 'South', coverageLabel: 'Priority event coverage', x: 350, y: 320 },
-  { name: 'Chennai', region: 'South', coverageLabel: 'Travel and executive coverage', x: 440, y: 315 },
+  { name: 'Ahmedabad', region: 'Central Gujarat', coverageLabel: 'Primary operations and rapid deployment hub', x: 210, y: 145 },
+  { name: 'Gandhinagar', region: 'North Central Gujarat', coverageLabel: 'Administrative and executive support coverage', x: 240, y: 110 },
+  { name: 'Vadodara', region: 'Central Gujarat', coverageLabel: 'Corporate, event, and site coverage', x: 310, y: 185 },
+  { name: 'Surat', region: 'South Gujarat', coverageLabel: 'Commercial and venue deployment coverage', x: 275, y: 275 },
+  { name: 'Rajkot', region: 'Saurashtra', coverageLabel: 'Regional response and property guarding coverage', x: 95, y: 170 },
+  { name: 'Jamnagar', region: 'Saurashtra', coverageLabel: 'Industrial and coastal assignment coverage', x: 50, y: 130 },
+  { name: 'Bhavnagar', region: 'Saurashtra', coverageLabel: 'Estate and port-adjacent coverage support', x: 175, y: 245 },
+  { name: 'Junagadh', region: 'Saurashtra', coverageLabel: 'District-level guarding and event support', x: 85, y: 245 },
 ];
 
 export const NAV_LINKS = [

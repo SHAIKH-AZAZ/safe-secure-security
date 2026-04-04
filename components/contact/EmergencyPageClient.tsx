@@ -6,6 +6,7 @@ import { useState } from 'react';
 import {
   CITY_OPTIONS,
   CONTACT_METHOD_OPTIONS,
+  EMERGENCY_REQUIRED_FIELDS,
   EMPTY_LEAD_FORM,
   type LeadFormKey,
   validateLeadForm,
@@ -28,15 +29,6 @@ const INITIAL_FORM: LeadFormState = {
   preferred_contact_method: CONTACT_METHOD_OPTIONS[0],
 };
 
-const REQUIRED_FIELDS: LeadFormKey[] = [
-  'name',
-  'phone',
-  'city',
-  'service_type',
-  'message',
-  'preferred_contact_method',
-];
-
 function FieldError({ field, errors }: { field: LeadFormKey; errors: LeadFormErrors }) {
   if (!errors[field]) {
     return null;
@@ -49,23 +41,49 @@ export default function EmergencyPageClient() {
   const [form, setForm] = useState<LeadFormState>(INITIAL_FORM);
   const [errors, setErrors] = useState<LeadFormErrors>({});
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const updateField = (field: LeadFormKey, value: string) => {
     setForm((current) => ({ ...current, [field]: value }));
     setErrors((current) => ({ ...current, [field]: undefined }));
+    setSubmitError(null);
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const nextErrors = validateLeadForm(form, REQUIRED_FIELDS);
+    const nextErrors = validateLeadForm(form, EMERGENCY_REQUIRED_FIELDS);
 
     if (Object.keys(nextErrors).length > 0) {
       setErrors(nextErrors);
       return;
     }
 
-    setSubmitted(true);
+    setSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const response = await fetch('/api/emergency', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
+      });
+
+      const result = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Unable to send the emergency request right now.');
+      }
+
+      setSubmitted(true);
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'Unable to send the emergency request right now.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -107,8 +125,8 @@ export default function EmergencyPageClient() {
                   </div>
                   <h2>Emergency brief recorded</h2>
                   <p>
-                    This short-form request validated successfully in the browser. Before launch,
-                    connect it to a monitored alert workflow so urgent submissions reach the right team.
+                    Your emergency brief has been sent to the monitored inbox so the operations team
+                    can triage it immediately.
                   </p>
                   <Link href="/" className="btn btn-outline">
                     Return to home
@@ -162,7 +180,7 @@ export default function EmergencyPageClient() {
                           onChange={(event) => updateField('city', event.target.value)}
                           aria-invalid={errors.city ? 'true' : 'false'}
                         >
-                          <option value="">Select metro area</option>
+                          <option value="">Select city or district in Gujarat</option>
                           {CITY_OPTIONS.map((option) => (
                             <option key={option} value={option}>{option}</option>
                           ))}
@@ -243,11 +261,13 @@ export default function EmergencyPageClient() {
 
                     <div className={styles.alertCallout}>
                       <IconAlert size={14} />
-                      Browser validation only until backend routing is connected
+                      Emergency requests are emailed directly to the operations inbox
                     </div>
 
-                    <button type="submit" className={`btn btn-primary ${styles.submit}`}>
-                      Send Emergency Request
+                    {submitError ? <p className={styles.errorText}>{submitError}</p> : null}
+
+                    <button type="submit" className={`btn btn-primary ${styles.submit}`} disabled={submitting}>
+                      {submitting ? 'Sending Emergency Request...' : 'Send Emergency Request'}
                       <IconArrowRight size={16} />
                     </button>
                   </form>

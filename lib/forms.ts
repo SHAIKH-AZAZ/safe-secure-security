@@ -28,14 +28,17 @@ export const EMPTY_LEAD_FORM: LeadFormState = {
 };
 
 export const CITY_OPTIONS = [
-  'Mumbai',
-  'Delhi NCR',
-  'Bengaluru',
-  'Hyderabad',
-  'Chennai',
-  'Pune',
   'Ahmedabad',
-  'Other city',
+  'Surat',
+  'Vadodara',
+  'Rajkot',
+  'Gandhinagar',
+  'Bhavnagar',
+  'Jamnagar',
+  'Junagadh',
+  'Anand',
+  'Bharuch',
+  'Other location in Gujarat',
 ] as const;
 
 export const URGENCY_OPTIONS = [
@@ -137,6 +140,25 @@ export const HERO_TAB_FIELDS = {
   event: ['name', 'phone', 'city', 'site_or_event_location', 'date_or_start_date', 'guest_count'] as LeadFormKey[],
   site: ['name', 'phone', 'city', 'site_type', 'number_of_personnel', 'shift_hours', 'date_or_start_date'] as LeadFormKey[],
 } as const;
+
+export const CONTACT_REQUIRED_FIELDS: LeadFormKey[] = [
+  'name',
+  'phone',
+  'service_type',
+  'client_segment',
+  'city',
+  'urgency_level',
+  'preferred_contact_method',
+];
+
+export const EMERGENCY_REQUIRED_FIELDS: LeadFormKey[] = [
+  'name',
+  'phone',
+  'city',
+  'service_type',
+  'message',
+  'preferred_contact_method',
+];
 
 const PHONE_PATTERN = /^[0-9+()\-\s]{7,}$/;
 

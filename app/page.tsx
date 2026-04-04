@@ -16,7 +16,7 @@ import { buildMetadata, SITE } from '@/lib/site';
 
 export const metadata: Metadata = buildMetadata({
   description:
-    'Sentinel Security delivers executive protection, event coverage, and property guarding through a premium, brief-led security model.',
+    'Sentinel Security delivers executive protection, event coverage, and property guarding across Gujarat through a premium, brief-led security model.',
   path: '/',
 });
 

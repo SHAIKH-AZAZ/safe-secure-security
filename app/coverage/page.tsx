@@ -9,7 +9,7 @@ import { buildMetadata } from '@/lib/site';
 export const metadata: Metadata = buildMetadata({
   title: 'Coverage',
   description:
-    'Review Sentinel Security’s illustrative launch footprint across major metro markets and planned operating regions.',
+    'Review Sentinel Security coverage across Gujarat, including major cities and regional deployment areas.',
   path: '/coverage',
 });
 
@@ -21,15 +21,15 @@ export default function CoveragePage() {
           <SectionReveal>
             <span className="section-label">Coverage Footprint</span>
             <h1 className="page-title">
-              Metro coverage
+              Coverage across
               <br />
-              designed for
+              all of
               <br />
-              <span style={{ color: 'var(--gold)' }}>planned deployment.</span>
+              <span style={{ color: 'var(--gold)' }}>Gujarat.</span>
             </h1>
             <p className="page-description">
-              The map and city list below are placeholder launch content. They establish the structure
-              for a multi-city brand page, but they should be verified before production use.
+              We support planned and urgent deployments across Gujarat for executive protection,
+              events, commercial sites, and residential estates.
             </p>
           </SectionReveal>
         </div>
@@ -75,9 +75,9 @@ export default function CoveragePage() {
             }}
           >
             <div>
-              <h3 style={{ fontSize: 24, fontWeight: 800, marginBottom: 4 }}>Need coverage elsewhere?</h3>
+              <h3 style={{ fontSize: 24, fontWeight: 800, marginBottom: 4 }}>Need coverage in another district?</h3>
               <p style={{ fontSize: 14, color: 'var(--text-muted)', lineHeight: 1.7 }}>
-                Use the quote form to describe the market, travel profile, and operating environment.
+                Use the quote form to share the exact Gujarat location, travel profile, and operating environment.
               </p>
             </div>
             <Link href="/contact" className="btn btn-primary">

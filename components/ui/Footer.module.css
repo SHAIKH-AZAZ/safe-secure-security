@@ -11,8 +11,8 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
-  gap: 48px;
+  grid-template-columns: minmax(280px, 1.15fr) minmax(160px, 0.9fr) minmax(160px, 0.9fr) minmax(260px, 1.2fr);
+  gap: 40px;
   padding-top: 64px;
   padding-bottom: 64px;
 }
@@ -22,34 +22,21 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  max-width: 320px;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
   text-decoration: none;
+  width: fit-content;
 }
 
-.logoIcon { color: var(--gold); }
-
-.logoName {
-  display: block;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 20px;
-  font-weight: 900;
-  letter-spacing: 0.1em;
-  color: var(--text-primary);
-  line-height: 1;
-}
-
-.logoSub {
-  display: block;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  color: var(--gold);
+.logoImage {
+  width: 140px;
+  height: auto;
+  max-width: none;
+  object-fit: contain;
 }
 
 .tagline {
@@ -150,14 +137,16 @@
 .cityList {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 12px;
   margin-bottom: 16px;
 }
 
 .cityItem {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: 10px minmax(0, 1fr);
+  column-gap: 8px;
+  row-gap: 2px;
+  align-items: start;
   font-size: 13px;
   color: var(--text-muted);
 }
@@ -168,14 +157,15 @@
   border-radius: 50%;
   background: var(--gold-dim);
   flex-shrink: 0;
+  margin-top: 6px;
 }
 
 .responseTime {
-  margin-left: auto;
+  grid-column: 2;
   font-size: 11px;
   color: var(--text-dimmed);
-  text-align: right;
-  max-width: 120px;
+  line-height: 1.5;
+  max-width: 100%;
 }
 
 .coverageLink {
@@ -236,6 +226,7 @@
     gap: 40px;
   }
   .brandCol { grid-column: 1 / -1; }
+  .brandCol { max-width: none; }
 }
 
 @media (max-width: 600px) {

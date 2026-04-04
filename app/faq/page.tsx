@@ -39,8 +39,7 @@ export default function FaqPage() {
             <span style={{ color: 'var(--gold)' }}>questions</span>
           </h1>
           <p className="page-description">
-            Straight answers on deployment timing, quote structure, coverage messaging, and launch-stage
-            placeholder content.
+            Straight answers on deployment timing, quote structure, and Gujarat-wide coverage planning.
           </p>
         </div>
       </section>

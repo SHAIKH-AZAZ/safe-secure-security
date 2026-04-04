@@ -13,9 +13,9 @@ export const SITE = {
   whatsappUrl: 'https://wa.me/919104069717',
   locale: 'en_IN',
   defaultTitle: 'Safe & Security Service | Executive Protection, Event Security, and Site Guarding',
-  tagline: 'Disciplined protection. Measured response. Discreet execution.',
+  tagline: 'Safe & Secure Security Service | All Gujarat',
   description:
-    'Premium executive protection, event security, and property guarding for leaders, venues, and high-value sites across key Indian metros.',
+    'Premium executive protection, event security, and property guarding for leaders, venues, and high-value sites across Gujarat.',
   emergencyLabel: '24/7 operations desk',
   mainBranch: {
     address: '8th Floor, 806 Samsar link Building, Opp Vishnudhara, Gradens Building, Jaguar Car Showroom Road, Jagatpura, Gota Ahmedabad 382470',

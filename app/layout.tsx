@@ -67,7 +67,7 @@ const organizationJsonLd = [
     description: SITE.description,
     email: SITE.email,
     telephone: SITE.phoneRaw,
-    areaServed: CITIES.map((city) => city.name),
+    areaServed: ['Gujarat', ...CITIES.map((city) => city.name)],
     contactPoint: [
       {
         '@type': 'ContactPoint',

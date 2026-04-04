@@ -123,8 +123,19 @@
   line-height: 1.6;
 }
 
+.errorText {
+  font-size: 12px;
+  color: #df8d8d;
+  line-height: 1.6;
+}
+
 .submit {
   width: 100%;
+}
+
+.submit:disabled {
+  opacity: 0.7;
+  cursor: wait;
 }
 
 .sidebar {

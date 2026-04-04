@@ -4,7 +4,7 @@ import { CITIES } from '@/lib/constants';
 import { SITE } from '@/lib/site';
 import styles from './UtilityBar.module.css';
 
-const utilityCities = CITIES.slice(0, 5).map((city) => city.name).join(' . ');
+const utilityCities = 'Coverage across Gujarat';
 
 export default function UtilityBar() {
   return (
