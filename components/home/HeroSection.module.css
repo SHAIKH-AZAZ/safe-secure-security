@@ -143,7 +143,6 @@
 .wizard {
   background: var(--bg-card);
   border: 1px solid var(--border-card);
-  overflow: hidden;
   position: relative;
 }
 
@@ -262,6 +261,7 @@
   border-top: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 16px;
 }
 
@@ -278,9 +278,7 @@
 
 /* Urgency badge */
 .urgencyBadge {
-  position: absolute;
-  bottom: -16px;
-  right: 24px;
+  margin: 0 24px 20px;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -289,16 +287,17 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--text-muted);
-  background: var(--bg-secondary);
+  background: var(--bg-elevated);
   border: 1px solid var(--border-card);
   padding: 6px 14px;
+  width: fit-content;
 }
 
 .urgencyDot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--green);
+  background: var(--gold);
   animation: pulse-glow 2s infinite;
 }
 
