@@ -389,18 +389,32 @@ export default function ContactPageClient() {
               <div className={styles.panel}>
                 <h3>Direct contact</h3>
                 <div className={styles.contactList}>
-                  <a href={SITE.phoneHref} className={styles.contactItem}>
-                    <IconPhone size={16} />
-                    {SITE.phoneDisplay}
-                  </a>
-                  <a href={SITE.whatsappUrl} target="_blank" rel="noopener noreferrer" className={styles.contactItem}>
-                    <IconWhatsapp size={16} />
-                    WhatsApp intake
-                  </a>
-                  <a href={`mailto:${SITE.email}`} className={styles.contactItem}>
-                    <IconEmail size={16} />
-                    {SITE.email}
-                  </a>
+                  <div style={{ marginBottom: '1rem' }}>
+                    <h4 style={{ fontSize: '14px', marginBottom: '8px', color: 'var(--gold)' }}>Main Branch</h4>
+                    {SITE.mainBranch.phones.map((phone) => (
+                      <a key={phone} href={`tel:${phone.replace(/\\s+/g, '')}`} className={styles.contactItem}>
+                        <IconPhone size={16} />
+                        {phone}
+                      </a>
+                    ))}
+                    <a href={SITE.whatsappUrl} target="_blank" rel="noopener noreferrer" className={styles.contactItem}>
+                      <IconWhatsapp size={16} />
+                      WhatsApp intake
+                    </a>
+                    <a href={`mailto:${SITE.email}`} className={styles.contactItem}>
+                      <IconEmail size={16} />
+                      {SITE.email}
+                    </a>
+                  </div>
+                  <div>
+                    <h4 style={{ fontSize: '14px', marginBottom: '8px', color: 'var(--gold)' }}>Branch Office</h4>
+                    {SITE.branchOffice.phones.map((phone) => (
+                      <a key={phone} href={`tel:${phone.replace(/\\s+/g, '')}`} className={styles.contactItem}>
+                        <IconPhone size={16} />
+                        {phone}
+                      </a>
+                    ))}
+                  </div>
                 </div>
               </div>
 

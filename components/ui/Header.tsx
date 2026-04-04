@@ -1,8 +1,9 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { IconClose, IconMenu, IconPhone, IconShield } from '@/components/icons';
+import { IconClose, IconMenu, IconPhone } from '@/components/icons';
 import { NAV_LINKS } from '@/lib/constants';
 import { SITE } from '@/lib/site';
 import styles from './Header.module.css';
@@ -32,9 +33,14 @@ export default function Header() {
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
       <nav className={`container ${styles.nav}`} aria-label="Main navigation">
         <Link href="/" className={styles.logo} aria-label={`${SITE.name} home`}>
-          <IconShield size={26} className={styles.logoIcon} />
-          <span className={styles.logoText}>SAFE</span>
-          <span className={styles.logoSub}>& SECURITY SERVICE</span>
+          <Image
+            src="/logo.png"
+            alt={`${SITE.name} logo`}
+            width={837}
+            height={365}
+            priority
+            className={styles.logoImage}
+          />
         </Link>
 
         <ul className={styles.navLinks} role="list">

@@ -54,22 +54,41 @@ export default function Footer() {
 
           <p className={styles.tagline}>{SITE.tagline}</p>
 
-          <div className={styles.contactItems}>
-            <a href={SITE.phoneHref} className={styles.contactItem}>
-              <IconPhone size={14} />
-              {SITE.phoneDisplay}
-            </a>
-            <a href={SITE.whatsappUrl} className={styles.contactItem} target="_blank" rel="noopener noreferrer">
-              <IconWhatsapp size={14} />
-              WhatsApp intake
-            </a>
-            <a href={`mailto:${SITE.email}`} className={styles.contactItem}>
-              <IconEmail size={14} />
-              {SITE.email}
-            </a>
+          <div className={styles.addressBlock}>
+            <h4 className={styles.addressTitle}>Main Branch</h4>
+            <p className={styles.addressText}>{SITE.mainBranch.address}</p>
+            <div className={styles.contactItems}>
+              {SITE.mainBranch.phones.map((phone) => (
+                <a key={phone} href={`tel:${phone.replace(/\\s+/g, '')}`} className={styles.contactItem}>
+                  <IconPhone size={14} />
+                  {phone}
+                </a>
+              ))}
+              <a href={SITE.whatsappUrl} className={styles.contactItem} target="_blank" rel="noopener noreferrer">
+                <IconWhatsapp size={14} />
+                WhatsApp intake
+              </a>
+              <a href={`mailto:${SITE.email}`} className={styles.contactItem}>
+                <IconEmail size={14} />
+                {SITE.email}
+              </a>
+            </div>
           </div>
 
-          <div className={styles.responseBadge}>
+          <div className={styles.addressBlock} style={{ marginTop: '0.5rem' }}>
+            <h4 className={styles.addressTitle}>Branch Office</h4>
+            <p className={styles.addressText}>{SITE.branchOffice.address}</p>
+            <div className={styles.contactItems}>
+              {SITE.branchOffice.phones.map((phone) => (
+                <a key={phone} href={`tel:${phone.replace(/\\s+/g, '')}`} className={styles.contactItem}>
+                  <IconPhone size={14} />
+                  {phone}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div className={styles.responseBadge} style={{ marginTop: '0.5rem' }}>
             <IconClock size={12} />
             {SITE.emergencyLabel}
           </div>

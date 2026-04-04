@@ -76,6 +76,27 @@
 .contactItem:hover { color: var(--gold); }
 .contactItem svg { color: var(--gold-dim); flex-shrink: 0; }
 
+.addressBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.addressTitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.addressText {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
 .responseBadge {
   display: inline-flex;
   align-items: center;
