@@ -64,6 +64,26 @@ export interface ProcessStep {
   description: string;
 }
 
+export interface CmsEntry {
+  id: string;
+  title: string;
+  slug: string;
+  category: string;
+  summary: string;
+  body: string;
+  status: 'draft' | 'published';
+  createdAt: string;
+}
+
+export interface CmsEntryInput {
+  title: string;
+  slug?: string;
+  category: string;
+  summary: string;
+  body: string;
+  status?: 'draft' | 'published';
+}
+
 export interface LeadFormState {
   name: string;
   phone: string;
