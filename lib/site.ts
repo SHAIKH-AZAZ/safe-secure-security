@@ -5,8 +5,9 @@ export const SITE = {
   legalName: 'Safe & Security Service',
   shortName: 'Safe',
   url: 'https://safesecurityservice.example',
-  email: 'ops@safesecurityservice.example',
+  email: 'safesecuresecurityservice@gmail.com',
   careersEmail: 'careers@safesecurityservice.example',
+  
   phoneDisplay: '+91 9104069717',
   phoneHref: 'tel:+919104069717',
   phoneRaw: '+919104069717',

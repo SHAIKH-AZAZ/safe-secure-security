@@ -414,10 +414,6 @@ export default function ContactPageClient() {
                         {phone}
                       </a>
                     ))}
-                    <a href={SITE.whatsappUrl} target="_blank" rel="noopener noreferrer" className={styles.contactItem}>
-                      <IconWhatsapp size={16} />
-                      WhatsApp intake
-                    </a>
                     <a href={`mailto:${SITE.email}`} className={styles.contactItem}>
                       <IconEmail size={16} />
                       {SITE.email}

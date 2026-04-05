@@ -6,7 +6,6 @@ import {
   IconEmail,
   IconLocation,
   IconPhone,
-  IconWhatsapp,
 } from '@/components/icons';
 import { CITIES } from '@/lib/constants';
 import { SITE } from '@/lib/site';
@@ -66,10 +65,6 @@ export default function Footer() {
                   {phone}
                 </a>
               ))}
-              <a href={SITE.whatsappUrl} className={styles.contactItem} target="_blank" rel="noopener noreferrer">
-                <IconWhatsapp size={14} />
-                WhatsApp intake
-              </a>
               <a href={`mailto:${SITE.email}`} className={styles.contactItem}>
                 <IconEmail size={14} />
                 {SITE.email}
