@@ -56,7 +56,7 @@ export default function Footer() {
           <p className={styles.tagline}>{SITE.tagline}</p>
 
           <div className={styles.addressBlock}>
-            <h4 className={styles.addressTitle}>Main Branch</h4>
+            <h4 className={styles.addressTitle}>Head Office </h4>
             <p className={styles.addressText}>{SITE.mainBranch.address}</p>
             <div className={styles.contactItems}>
               {SITE.mainBranch.phones.map((phone) => (

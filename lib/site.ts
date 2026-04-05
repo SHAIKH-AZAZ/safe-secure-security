@@ -23,7 +23,7 @@ export const SITE = {
     phones: ['+91 9104069717', '+91 7096107979']
   },
   branchOffice: {
-    address: 'Shams Fitness Point GYM',
+    address: 'Shams Fitness Point GYM, Sarkhej Ahmedabad ',
     phones: ['+91 9898735375', '+91 9998727695']
   }
 } as const;
