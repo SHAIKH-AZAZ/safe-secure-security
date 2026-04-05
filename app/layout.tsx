@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Barlow_Condensed, Inter } from 'next/font/google';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 import Footer from '@/components/ui/Footer';
 import Header from '@/components/ui/Header';
@@ -100,6 +101,7 @@ export default function RootLayout({
         <main id="main-content">{children}</main>
         <Footer />
         <MobileBar />
+        <SpeedInsights />
       </body>
     </html>
   );
