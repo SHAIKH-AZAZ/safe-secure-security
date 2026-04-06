@@ -64,6 +64,11 @@ export interface ProcessStep {
   description: string;
 }
 
+export interface NavLink {
+  label: string;
+  href: string;
+}
+
 export interface CmsEntry {
   id: string;
   title: string;

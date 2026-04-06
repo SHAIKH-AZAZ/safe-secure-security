@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { IconArrowRight } from '@/components/icons';
 import JsonLd from '@/components/ui/JsonLd';
 import SectionReveal from '@/components/ui/SectionReveal';
-import { CASE_STUDIES } from '@/lib/constants';
+import { getSiteContent } from '@/lib/admin-api';
 import { buildMetadata, SITE } from '@/lib/site';
 
 export const metadata: Metadata = buildMetadata({
@@ -21,7 +21,9 @@ const caseStudiesJsonLd = {
   description: 'Illustrative case studies pending launch verification.',
 };
 
-export default function CaseStudiesPage() {
+export default async function CaseStudiesPage() {
+  const content = await getSiteContent();
+
   return (
     <>
       <JsonLd data={caseStudiesJsonLd} />
@@ -51,7 +53,7 @@ export default function CaseStudiesPage() {
           </div>
 
           <div className="page-stack">
-            {CASE_STUDIES.map((study, index) => (
+            {content.caseStudies.map((study, index) => (
               <SectionReveal
                 key={study.id}
                 delay={index * 80}

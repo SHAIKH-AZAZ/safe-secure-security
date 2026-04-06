@@ -1,0 +1,460 @@
+{
+  "hero": {
+    "headline": "Executive Protection, Event Security & Property Guarding",
+    "subheadline": "Supervisor-led teams for Gujarat's corporate, hospitality, and private-client environments. Discreet, documented, and deployment-ready.",
+    "ctaPrimary": "Request a Consultation",
+    "ctaSecondary": "Explore Services",
+    "backgroundImage": ""
+  },
+  "serviceClusters": [
+    {
+      "id": "personal-protection",
+      "name": "Personal Protection",
+      "services": [
+        {
+          "id": "executive-protection",
+          "name": "Executive Protection",
+          "description": "Discreet close-protection teams for founders, executives, public figures, and family principals.",
+          "tags": [
+            "Advance planning",
+            "Plain clothes",
+            "Travel support"
+          ],
+          "href": "/executive-protection",
+          "icon": "shield"
+        },
+        {
+          "id": "family-office-security",
+          "name": "Family Office Security",
+          "description": "Protective details shaped around privacy, residential routines, and stakeholder travel.",
+          "tags": [
+            "Residential interface",
+            "Low-profile teams",
+            "NDA-ready"
+          ],
+          "href": "/executive-protection",
+          "icon": "star-shield"
+        },
+        {
+          "id": "travel-escort",
+          "name": "Travel Escort",
+          "description": "Airport coordination, route management, and multi-stop coverage for time-sensitive itineraries.",
+          "tags": [
+            "Route planning",
+            "Airport liaison",
+            "Multi-city"
+          ],
+          "href": "/executive-protection",
+          "icon": "route"
+        }
+      ]
+    },
+    {
+      "id": "event-venue",
+      "name": "Event & Venue",
+      "services": [
+        {
+          "id": "private-events",
+          "name": "Private Event Security",
+          "description": "Guest-facing teams for galas, leadership summits, luxury launches, and invite-only gatherings.",
+          "tags": [
+            "Guest screening",
+            "VIP arrival lanes",
+            "Supervisor-led"
+          ],
+          "href": "/event-venue-security",
+          "icon": "crowd"
+        },
+        {
+          "id": "door-supervision",
+          "name": "Venue & Door Supervision",
+          "description": "Controlled entry, queue management, and de-escalation support for premium venues and nightlife.",
+          "tags": [
+            "Door staff",
+            "Conflict management",
+            "Queue control"
+          ],
+          "href": "/event-venue-security",
+          "icon": "door"
+        },
+        {
+          "id": "screening-operations",
+          "name": "Access & Screening",
+          "description": "Credential checks, guest-list validation, bag screening, and perimeter monitoring.",
+          "tags": [
+            "Credentialing",
+            "Entry points",
+            "Flow management"
+          ],
+          "href": "/event-venue-security",
+          "icon": "scan"
+        }
+      ]
+    },
+    {
+      "id": "corporate-property",
+      "name": "Corporate & Property",
+      "services": [
+        {
+          "id": "corporate-guarding",
+          "name": "Corporate Guarding",
+          "description": "Front-of-house and perimeter coverage for offices, headquarters, and high-traffic commercial sites.",
+          "tags": [
+            "Reception coverage",
+            "Visitor control",
+            "Incident logs"
+          ],
+          "href": "/corporate-property",
+          "icon": "building"
+        },
+        {
+          "id": "estate-security",
+          "name": "Estate & Residential Security",
+          "description": "Guarding plans for private residences, gated communities, and luxury mixed-use properties.",
+          "tags": [
+            "Residential protocols",
+            "Visitor vetting",
+            "Overnight cover"
+          ],
+          "href": "/corporate-property",
+          "icon": "home-shield"
+        },
+        {
+          "id": "control-room-support",
+          "name": "Patrol & Control Support",
+          "description": "Mobile patrol, CCTV review support, and access-control coordination for managed environments.",
+          "tags": [
+            "Patrol checks",
+            "CCTV support",
+            "Access control"
+          ],
+          "href": "/corporate-property",
+          "icon": "camera"
+        }
+      ]
+    }
+  ],
+  "industries": [
+    {
+      "id": "executive-offices",
+      "name": "Executive Offices",
+      "icon": "office",
+      "description": "Security presence for leadership floors, receptions, and executive movement."
+    },
+    {
+      "id": "luxury-hospitality",
+      "name": "Luxury Hospitality",
+      "icon": "nightclub",
+      "description": "Guest-focused protection for hotels, private clubs, and nightlife venues."
+    },
+    {
+      "id": "private-events",
+      "name": "Private Events",
+      "icon": "ring",
+      "description": "Discrete event teams for social calendars, donor gatherings, and launch events."
+    },
+    {
+      "id": "estates",
+      "name": "Private Estates",
+      "icon": "gate",
+      "description": "Layered gate, visitor, and perimeter coverage for residential properties."
+    },
+    {
+      "id": "retail",
+      "name": "Flagship Retail",
+      "icon": "store",
+      "description": "Loss-prevention visibility and customer-safe screening for premium storefronts."
+    },
+    {
+      "id": "industrial",
+      "name": "Industrial Sites",
+      "icon": "warehouse",
+      "description": "Perimeter checks, shift handoff discipline, and access management for critical sites."
+    },
+    {
+      "id": "media",
+      "name": "Talent & Media",
+      "icon": "camera-media",
+      "description": "Protection support for talent movement, media days, and public appearances."
+    },
+    {
+      "id": "public-programs",
+      "name": "Public-Facing Programs",
+      "icon": "podium",
+      "description": "Crowd management and principal movement for civic and brand-facing events."
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "ops-director",
+      "quote": "Sentinel stepped into a sensitive leadership program with calm structure. Their team blended into the guest experience while keeping arrivals, credential checks, and executive movement tightly controlled.",
+      "clientType": "Operations Director, Private Capital Firm",
+      "outcome": "Illustrative result: seamless arrivals and controlled guest flow",
+      "location": "Mumbai"
+    },
+    {
+      "id": "chief-of-staff",
+      "quote": "We needed a low-profile team that understood discretion more than theatrics. Sentinel handled travel transitions, site checks, and family-facing coordination exactly the way we needed.",
+      "clientType": "Chief of Staff, Family Office",
+      "outcome": "Illustrative result: protected travel with low visible footprint",
+      "location": "Delhi NCR"
+    },
+    {
+      "id": "venue-producer",
+      "quote": "The value was not just staffing. It was the pace, the briefing discipline, and the confidence of having one supervisor who owned the floor from load-in to final guest exit.",
+      "clientType": "Venue Producer, Luxury Hospitality Group",
+      "outcome": "Illustrative result: orderly entry and escalation-ready supervision",
+      "location": "Bengaluru"
+    }
+  ],
+  "caseStudies": [
+    {
+      "id": "board-summit",
+      "clientType": "Board Retreat for a Public Company",
+      "problem": "A confidential leadership retreat required private arrival handling, perimeter awareness, and a guest-facing security posture that would not disrupt the hospitality environment.",
+      "solution": "Sentinel proposed a supervisor-led team with credential screening, arrival timing control, private route management, and discrete coverage around executive breakouts.",
+      "result": "Illustrative result: protected executive movement and controlled guest access without a visible security overreach.",
+      "tag": "Illustrative event deployment"
+    },
+    {
+      "id": "principal-travel",
+      "clientType": "Principal Travel for a Family Office",
+      "problem": "A principal required short-notice movement support between meetings, hotel transitions, and a public-facing dinner where low visibility mattered as much as responsiveness.",
+      "solution": "The plan combined advance route review, discreet close protection, hotel interface, and rapid handoff communication with the client office.",
+      "result": "Illustrative result: the itinerary remained on schedule with protective coverage tailored to privacy-sensitive moments.",
+      "tag": "Illustrative executive protection"
+    },
+    {
+      "id": "mixed-use-site",
+      "clientType": "New Mixed-Use Residential Property",
+      "problem": "A newly occupied property needed front-desk structure, overnight patrol discipline, and visitor handling that felt premium rather than confrontational.",
+      "solution": "Sentinel framed a coverage plan around post orders, access rules, visitor escalation paths, and supervisor review rhythms for the launch phase.",
+      "result": "Illustrative result: a professional site-security baseline with clearer access control and tenant-facing consistency.",
+      "tag": "Illustrative property guarding"
+    }
+  ],
+  "faqItems": [
+    {
+      "id": "deployment-speed",
+      "question": "How quickly can Sentinel deploy a team?",
+      "answer": "Planned assignments usually begin after a consultation, scope review, and security plan sign-off. For urgent briefs, our operations desk can advise on the fastest available deployment window anywhere in Gujarat based on staffing type and travel requirements."
+    },
+    {
+      "id": "staff-mix",
+      "question": "Do you provide both male and female security personnel?",
+      "answer": "Yes. Requests for male, female, or mixed teams can be accommodated based on assignment needs, client preference, and local availability."
+    },
+    {
+      "id": "plain-clothes",
+      "question": "Can your teams work in plain clothes?",
+      "answer": "Yes. Plain-clothes coverage is common for executive protection, private events, hospitality environments, and other assignments where a discreet posture is preferred."
+    },
+    {
+      "id": "short-vs-long",
+      "question": "Do you handle both one-day events and long-term guarding contracts?",
+      "answer": "We support both short-duration deployments and ongoing coverage. The service plan, supervisor structure, and reporting cadence are tailored to the assignment length."
+    },
+    {
+      "id": "coverage",
+      "question": "Which cities do you currently cover?",
+      "answer": "We provide coverage across Gujarat, including Ahmedabad, Surat, Vadodara, Rajkot, Gandhinagar, and surrounding districts. Share the exact location and assignment brief, and we will confirm deployment planning accordingly."
+    },
+    {
+      "id": "pricing",
+      "question": "How is pricing structured?",
+      "answer": "Pricing depends on staffing profile, coverage hours, travel, location complexity, and supervisory requirements. Sentinel provides written proposals after reviewing the actual brief."
+    },
+    {
+      "id": "documentation",
+      "question": "What documentation supports an assignment?",
+      "answer": "Assignments are supported by written scope confirmation, staffing plans where required, and reporting or incident documentation appropriate to the deployment. Any specific licensing or compliance language should be verified before launch."
+    }
+  ],
+  "proofPillars": [
+    {
+      "id": "people",
+      "title": "People",
+      "label": "Screened, briefed, client-facing",
+      "points": [
+        "Assignments staffed around the brief, not a generic roster",
+        "Supervisors own the handoff between plan and field execution",
+        "Visible professionalism in both uniformed and discreet environments",
+        "Client-sensitive communication standards for premium settings"
+      ]
+    },
+    {
+      "id": "process",
+      "title": "Process",
+      "label": "Scoped, documented, accountable",
+      "points": [
+        "Each engagement begins with consultation and scope alignment",
+        "Operational details are translated into a practical deployment plan",
+        "Escalation pathways are defined before the team is on the ground",
+        "Post-assignment reporting is available when the brief requires it"
+      ]
+    },
+    {
+      "id": "coverage",
+      "title": "Coverage",
+      "label": "Gujarat-wide, travel-capable",
+      "points": [
+        "Coverage plans built for deployments across Gujarat and inter-city travel within the state",
+        "Support for executive movement, venue operations, and fixed-site guarding",
+        "Flexible staffing for day rates, events, or recurring site needs",
+        "A single point of contact for planning and operational updates"
+      ]
+    },
+    {
+      "id": "compliance",
+      "title": "Compliance",
+      "label": "Contractual, discreet, launch-ready",
+      "points": [
+        "Scope and service terms are documented before deployment",
+        "Confidential assignments can include NDA workflows",
+        "Operational language stays aligned with client-side compliance teams",
+        "Any state or licensing references should be verified before launch"
+      ]
+    }
+  ],
+  "processSteps": [
+    {
+      "number": "01",
+      "title": "Consultation",
+      "description": "We start with the brief: environment, stakeholders, schedule, sensitivities, and what success looks like."
+    },
+    {
+      "number": "02",
+      "title": "Risk Assessment",
+      "description": "Sentinel reviews the site, movement plan, guest profile, and operational pressure points that could affect delivery."
+    },
+    {
+      "number": "03",
+      "title": "Security Plan",
+      "description": "You receive a scoped plan covering staffing posture, roles, escalation paths, and coverage assumptions."
+    },
+    {
+      "number": "04",
+      "title": "Deployment",
+      "description": "Supervisors brief the team, confirm positioning, and manage live communications through the assignment window."
+    },
+    {
+      "number": "05",
+      "title": "Reporting",
+      "description": "Where the brief requires it, Sentinel closes the loop with reporting, observations, and recommended next steps."
+    }
+  ],
+  "cities": [
+    {
+      "name": "Ahmedabad",
+      "region": "Central Gujarat",
+      "coverageLabel": "Primary operations and rapid deployment hub",
+      "x": 210,
+      "y": 145
+    },
+    {
+      "name": "Gandhinagar",
+      "region": "North Central Gujarat",
+      "coverageLabel": "Administrative and executive support coverage",
+      "x": 240,
+      "y": 110
+    },
+    {
+      "name": "Vadodara",
+      "region": "Central Gujarat",
+      "coverageLabel": "Corporate, event, and site coverage",
+      "x": 310,
+      "y": 185
+    },
+    {
+      "name": "Surat",
+      "region": "South Gujarat",
+      "coverageLabel": "Commercial and venue deployment coverage",
+      "x": 275,
+      "y": 275
+    },
+    {
+      "name": "Rajkot",
+      "region": "Saurashtra",
+      "coverageLabel": "Regional response and property guarding coverage",
+      "x": 95,
+      "y": 170
+    },
+    {
+      "name": "Jamnagar",
+      "region": "Saurashtra",
+      "coverageLabel": "Industrial and coastal assignment coverage",
+      "x": 50,
+      "y": 130
+    },
+    {
+      "name": "Bhavnagar",
+      "region": "Saurashtra",
+      "coverageLabel": "Estate and port-adjacent coverage support",
+      "x": 175,
+      "y": 245
+    },
+    {
+      "name": "Junagadh",
+      "region": "Saurashtra",
+      "coverageLabel": "District-level guarding and event support",
+      "x": 85,
+      "y": 245
+    }
+  ],
+  "navLinks": [
+    {
+      "label": "Services",
+      "href": "#services"
+    },
+    {
+      "label": "Industries",
+      "href": "#industries"
+    },
+    {
+      "label": "Coverage",
+      "href": "/coverage"
+    },
+    {
+      "label": "Why Us",
+      "href": "#why-us"
+    },
+    {
+      "label": "Case Studies",
+      "href": "#case-studies"
+    },
+    {
+      "label": "Contact",
+      "href": "/contact"
+    }
+  ],
+  "trustStripItems": [
+    "Supervisor-led deployments",
+    "Discreet client handling",
+    "24/7 operations desk",
+    "Multi-market coordination",
+    "NDA-ready workflows",
+    "Brief-first planning"
+  ],
+  "site": {
+    "name": "Safe & Security Service",
+    "description": "Premium executive protection, event security, and property guarding for leaders, venues, and high-value sites across Gujarat.",
+    "phoneDisplay": "+91 9998727695",
+    "email": "safesecuresecurityservice@gmail.com"
+  },
+  "imageShowcase": [
+    {
+      "id": "showcase-1775496674275-dqev18",
+      "imageUrl": "/uploads/1775496658752-vercel-ship-26-sticker-suitcase.jpg",
+      "quote": "gpt image",
+      "name": "gpt hero",
+      "role": "model"
+    },
+    {
+      "id": "showcase-1775495841742",
+      "imageUrl": "/uploads/1775495849793-ChatGPTImageApr1202610_28_31PM.png",
+      "quote": "out first bouncer",
+      "name": "samir",
+      "role": "security bouncer"
+    }
+  ]
+}

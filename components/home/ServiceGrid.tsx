@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import { SERVICE_CLUSTERS } from '@/lib/constants';
 import { ICON_MAP, IconArrowRight } from '@/components/icons';
 import SectionReveal from '@/components/ui/SectionReveal';
 import styles from './ServiceGrid.module.css';
+import type { ServiceCluster } from '@/lib/admin-api';
 
-export default function ServiceGrid() {
+export default function ServiceGrid({ clusters }: { clusters: ServiceCluster[] }) {
   return (
     <section id="services" className={`section ${styles.section}`} aria-labelledby="services-heading">
       <div className="container">
@@ -19,7 +19,7 @@ export default function ServiceGrid() {
           </p>
         </SectionReveal>
 
-        {SERVICE_CLUSTERS.map((cluster, ci) => (
+        {clusters.map((cluster, ci) => (
           <SectionReveal key={cluster.id} delay={ci * 80} className={styles.cluster}>
             <div className={styles.clusterHeader}>
               <h3 className={styles.clusterName}>{cluster.name}</h3>

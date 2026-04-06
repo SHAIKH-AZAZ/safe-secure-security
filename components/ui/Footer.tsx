@@ -7,7 +7,7 @@ import {
   IconLocation,
   IconPhone,
 } from '@/components/icons';
-import { CITIES } from '@/lib/constants';
+import { City } from '@/lib/types';
 import { SITE } from '@/lib/site';
 import styles from './Footer.module.css';
 
@@ -34,7 +34,7 @@ const LEGAL_LINKS = [
   { label: 'Terms of Service', href: '/terms' },
 ];
 
-export default function Footer() {
+export default function Footer({ cities }: { cities: City[] }) {
   const year = new Date().getFullYear();
 
   return (
@@ -122,7 +122,7 @@ export default function Footer() {
         <div>
           <h3 className={styles.colTitle}>Coverage Footprint</h3>
           <ul className={styles.cityList}>
-            {CITIES.map((city) => (
+            {cities.map((city) => (
               <li key={city.name} className={styles.cityItem}>
                 <span className={styles.cityDot} />
                 <span>{city.name}</span>

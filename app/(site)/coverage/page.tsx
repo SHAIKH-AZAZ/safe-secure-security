@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { IconArrowRight, IconLocation } from '@/components/icons';
 import CoverageMap from '@/components/ui/CoverageMap';
 import SectionReveal from '@/components/ui/SectionReveal';
-import { CITIES } from '@/lib/constants';
+import { getSiteContent } from '@/lib/admin-api';
 import { buildMetadata } from '@/lib/site';
 
 export const metadata: Metadata = buildMetadata({
@@ -13,7 +13,9 @@ export const metadata: Metadata = buildMetadata({
   path: '/coverage',
 });
 
-export default function CoveragePage() {
+export default async function CoveragePage() {
+  const content = await getSiteContent();
+
   return (
     <>
       <section className="page-hero">
@@ -38,12 +40,12 @@ export default function CoveragePage() {
       <section className="section" style={{ background: 'var(--bg-secondary)' }}>
         <div className="container">
           <SectionReveal>
-            <CoverageMap />
+            <CoverageMap cities={content.cities} />
           </SectionReveal>
 
           <SectionReveal delay={80} style={{ marginTop: 32 }}>
             <div className="page-grid-4">
-              {CITIES.map((city, index) => (
+              {content.cities.map((city, index) => (
                 <SectionReveal key={city.name} delay={index * 40} className="card" style={{ padding: '24px 20px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
                     <span style={{ color: 'var(--gold)' }}>

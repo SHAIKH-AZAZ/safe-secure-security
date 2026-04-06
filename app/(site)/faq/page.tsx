@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import FaqSection from '@/components/home/FaqSection';
 import JsonLd from '@/components/ui/JsonLd';
-import { FAQS } from '@/lib/constants';
+import { getSiteContent } from '@/lib/admin-api';
 import { buildMetadata, SITE } from '@/lib/site';
 
 export const metadata: Metadata = buildMetadata({
@@ -12,20 +12,25 @@ export const metadata: Metadata = buildMetadata({
   path: '/faq',
 });
 
-const faqJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: FAQS.map((faq) => ({
-    '@type': 'Question',
-    name: faq.question,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: faq.answer,
-    },
-  })),
-};
+function generateFaqJsonLd(faqItems: { question: string; answer: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
+}
 
-export default function FaqPage() {
+export default async function FaqPage() {
+  const content = await getSiteContent();
+  const faqJsonLd = generateFaqJsonLd(content.faqItems);
+
   return (
     <>
       <JsonLd data={faqJsonLd} />
@@ -44,7 +49,7 @@ export default function FaqPage() {
         </div>
       </section>
 
-      <FaqSection showHeader={false} />
+      <FaqSection showHeader={false} faqs={content.faqItems} />
 
       <section className="section-sm" style={{ background: 'var(--bg-primary)', borderTop: '1px solid var(--border-subtle)' }}>
         <div className="container" style={{ textAlign: 'center' }}>

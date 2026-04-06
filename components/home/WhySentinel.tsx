@@ -1,9 +1,9 @@
-import { PROOF_PILLARS } from '@/lib/constants';
 import { IconCheck } from '@/components/icons';
 import SectionReveal from '@/components/ui/SectionReveal';
 import styles from './WhySentinel.module.css';
+import type { ProofPillar } from '@/lib/admin-api';
 
-export default function WhySentinel() {
+export default function WhySentinel({ pillars }: { pillars: ProofPillar[] }) {
   return (
     <section id="why-us" className={`section ${styles.section}`} aria-labelledby="why-heading">
       <div className="container">
@@ -19,7 +19,7 @@ export default function WhySentinel() {
         </SectionReveal>
 
         <div className={styles.grid} role="list">
-          {PROOF_PILLARS.map((pillar, i) => (
+          {pillars.map((pillar, i) => (
             <SectionReveal
               key={pillar.id}
               delay={i * 100}

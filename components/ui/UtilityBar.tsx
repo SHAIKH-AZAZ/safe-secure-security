@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { IconClock, IconLocation, IconPhone, IconWhatsapp } from '@/components/icons';
-import { CITIES } from '@/lib/constants';
 import { SITE } from '@/lib/site';
 import styles from './UtilityBar.module.css';
 

@@ -1,11 +1,11 @@
 'use client';
 import { useState } from 'react';
-import { FAQS } from '@/lib/constants';
 import { IconChevronDown } from '@/components/icons';
 import SectionReveal from '@/components/ui/SectionReveal';
 import styles from './FaqSection.module.css';
+import type { FaqItem } from '@/lib/admin-api';
 
-export default function FaqSection({ showHeader = true }: { showHeader?: boolean }) {
+export default function FaqSection({ faqs, showHeader = true }: { faqs: FaqItem[]; showHeader?: boolean }) {
   const [openId, setOpenId] = useState<string | null>(null);
 
   const toggle = (id: string) => setOpenId(openId === id ? null : id);
@@ -26,7 +26,7 @@ export default function FaqSection({ showHeader = true }: { showHeader?: boolean
           ) : null}
 
           <div className={styles.accordion} role="list">
-            {FAQS.map((faq, i) => {
+            {faqs.map((faq, i) => {
               const isOpen = openId === faq.id;
               return (
                 <SectionReveal

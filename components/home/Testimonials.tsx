@@ -1,8 +1,8 @@
-import { TESTIMONIALS } from '@/lib/constants';
 import SectionReveal from '@/components/ui/SectionReveal';
 import styles from './Testimonials.module.css';
+import type { Testimonial } from '@/lib/admin-api';
 
-export default function Testimonials() {
+export default function Testimonials({ testimonials }: { testimonials: Testimonial[] }) {
   return (
     <section id="testimonials" className={`section ${styles.section}`} aria-labelledby="testimonials-heading">
       <div className="container">
@@ -17,7 +17,7 @@ export default function Testimonials() {
         </SectionReveal>
 
         <div className={styles.grid} role="list">
-          {TESTIMONIALS.map((t, i) => (
+          {testimonials.map((t, i) => (
             <SectionReveal
               key={t.id}
               delay={i * 100}

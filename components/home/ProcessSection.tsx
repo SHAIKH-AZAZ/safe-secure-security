@@ -1,8 +1,8 @@
-import { PROCESS_STEPS } from '@/lib/constants';
 import SectionReveal from '@/components/ui/SectionReveal';
 import styles from './ProcessSection.module.css';
+import type { ProcessStep } from '@/lib/admin-api';
 
-export default function ProcessSection() {
+export default function ProcessSection({ steps }: { steps: ProcessStep[] }) {
   return (
     <section id="process" className={`section ${styles.section}`} aria-labelledby="process-heading">
       <div className="container">
@@ -18,7 +18,7 @@ export default function ProcessSection() {
         </SectionReveal>
 
         <div className={styles.steps} role="list" aria-label="Process steps">
-          {PROCESS_STEPS.map((step, i) => (
+          {steps.map((step, i) => (
             <SectionReveal
               key={step.number}
               delay={i * 80}
@@ -26,7 +26,7 @@ export default function ProcessSection() {
               role="listitem"
             >
               {/* Connector line */}
-              {i < PROCESS_STEPS.length - 1 && (
+              {i < steps.length - 1 && (
                 <div className={styles.connector} aria-hidden="true" />
               )}
 
