@@ -9,6 +9,8 @@ import UtilityBar from '@/components/ui/UtilityBar';
 import { getSiteContent } from '@/lib/admin-api';
 import { SITE } from '@/lib/site';
 
+export const dynamic = 'force-dynamic';
+
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-body',

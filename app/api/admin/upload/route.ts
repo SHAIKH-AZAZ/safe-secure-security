@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { put } from '@vercel/blob';
+import sharp from 'sharp';
 import fs from 'fs';
 import path from 'path';
 import { COOKIE_NAME, verifySessionCookie } from '@/lib/admin-auth';
@@ -8,8 +9,10 @@ export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
 const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads');
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4MB (safe under Vercel Function body limit)
 const IS_VERCEL_DEPLOYMENT = process.env.VERCEL === '1';
+const MAX_IMAGE_DIMENSION = 2400;
+const WEBP_QUALITY = 82;
 
 const ALLOWED_MIME_TYPES = [
   'image/jpeg',
@@ -76,7 +79,7 @@ function validateFile(file: File): { valid: boolean; error?: string } {
   if (file.size > MAX_FILE_SIZE) {
     return {
       valid: false,
-      error: `File too large. Maximum size: 5MB`,
+      error: `File too large. Maximum size: 4MB`,
     };
   }
 
@@ -145,6 +148,41 @@ function validateImageContent(file: File, buffer: Buffer): { valid: boolean; err
   return { valid: true, mime: detected.mime, extension: detectedExt };
 }
 
+async function optimizeUploadAsset(
+  buffer: Buffer,
+  mime: string,
+  extension: string
+): Promise<{ buffer: Buffer; mime: string; extension: string }> {
+  // Keep GIF as-is to avoid breaking animation frames.
+  if (mime === 'image/gif') {
+    return { buffer, mime, extension };
+  }
+
+  // Normalize static image uploads to optimized WebP.
+  const optimizedBuffer = await sharp(buffer, {
+    failOn: 'error',
+    limitInputPixels: 40_000_000,
+  })
+    .rotate()
+    .resize({
+      width: MAX_IMAGE_DIMENSION,
+      height: MAX_IMAGE_DIMENSION,
+      fit: 'inside',
+      withoutEnlargement: true,
+    })
+    .webp({
+      quality: WEBP_QUALITY,
+      effort: 4,
+    })
+    .toBuffer();
+
+  return {
+    buffer: optimizedBuffer,
+    mime: 'image/webp',
+    extension: '.webp',
+  };
+}
+
 /**
  * POST /api/admin/upload
  * Upload an image file
@@ -185,15 +223,29 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Generate unique filename based on detected type
-    const filename = generateUniqueFilename(file.name, contentValidation.extension);
+    let optimizedAsset: { buffer: Buffer; mime: string; extension: string };
+    try {
+      optimizedAsset = await optimizeUploadAsset(
+        buffer,
+        contentValidation.mime,
+        contentValidation.extension
+      );
+    } catch {
+      return NextResponse.json(
+        { error: 'Invalid or unreadable image file.' },
+        { status: 400 }
+      );
+    }
+
+    // Generate unique filename based on final stored type
+    const filename = generateUniqueFilename(file.name, optimizedAsset.extension);
 
     // Prefer Vercel Blob when token is configured (required for Vercel persistence).
     if (process.env.BLOB_READ_WRITE_TOKEN) {
-      const blob = await put(`uploads/${filename}`, buffer, {
+      const blob = await put(`uploads/${filename}`, optimizedAsset.buffer, {
         access: 'public',
         addRandomSuffix: true,
-        contentType: contentValidation.mime,
+        contentType: optimizedAsset.mime,
       });
       return NextResponse.json({ url: blob.url });
     }
@@ -212,7 +264,7 @@ export async function POST(req: NextRequest) {
     // Local development fallback: save to public/uploads
     ensureUploadDir();
     const filepath = path.join(UPLOAD_DIR, filename);
-    fs.writeFileSync(filepath, buffer);
+    fs.writeFileSync(filepath, optimizedAsset.buffer);
 
     return NextResponse.json({ url: `/uploads/${filename}` });
   } catch (error) {

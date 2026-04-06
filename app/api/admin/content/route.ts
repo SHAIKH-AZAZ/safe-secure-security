@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { COOKIE_NAME, verifySessionCookie } from '@/lib/admin-auth';
 import { getSiteContent, updateSiteContent, type SiteContent } from '@/lib/admin-api';
 
@@ -84,6 +85,7 @@ export async function POST(req: NextRequest) {
     }
 
     await updateSiteContent(body as SiteContent);
+    revalidatePath('/', 'layout');
     return NextResponse.json({ ok: true });
   } catch (error: unknown) {
     console.error('Error updating site content:', error);

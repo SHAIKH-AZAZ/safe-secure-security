@@ -23,6 +23,11 @@ interface Toast {
   type: 'success' | 'error';
 }
 
+const MAX_SOURCE_IMAGE_BYTES = 20 * 1024 * 1024; // 20MB accepted in browser before compression
+const MAX_FUNCTION_UPLOAD_BYTES = 4 * 1024 * 1024; // Vercel function-safe target
+const MAX_CLIENT_IMAGE_DIMENSION = 2400;
+const CLIENT_COMPRESSIBLE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
+
 function createEmptyShowcaseItem() {
   return {
     id: `showcase-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
@@ -40,6 +45,97 @@ function normalizeContentResponse(value: unknown): SiteContent {
     ...content,
     imageShowcase,
   } as SiteContent;
+}
+
+function canvasToBlob(canvas: HTMLCanvasElement, type: string, quality: number): Promise<Blob> {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((blob) => {
+      if (!blob) {
+        reject(new Error('Failed to process image.'));
+        return;
+      }
+      resolve(blob);
+    }, type, quality);
+  });
+}
+
+function loadImageFromFile(file: File): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    const objectUrl = URL.createObjectURL(file);
+    image.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+      resolve(image);
+    };
+    image.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      reject(new Error('Invalid image file.'));
+    };
+    image.src = objectUrl;
+  });
+}
+
+async function prepareImageForUpload(file: File): Promise<File> {
+  if (!file.type.startsWith('image/')) {
+    throw new Error('Only image files are supported.');
+  }
+
+  if (file.size > MAX_SOURCE_IMAGE_BYTES) {
+    throw new Error('Selected file is too large. Maximum source size is 20MB.');
+  }
+
+  // GIF is kept as-is to preserve animation frames.
+  if (!CLIENT_COMPRESSIBLE_TYPES.has(file.type)) {
+    if (file.size > MAX_FUNCTION_UPLOAD_BYTES) {
+      throw new Error('This file cannot be compressed enough for server upload. Please choose a file under 4MB.');
+    }
+    return file;
+  }
+
+  const image = await loadImageFromFile(file);
+  const initialScale = Math.min(
+    1,
+    MAX_CLIENT_IMAGE_DIMENSION / Math.max(image.naturalWidth, image.naturalHeight)
+  );
+  const baseWidth = Math.max(1, Math.round(image.naturalWidth * initialScale));
+  const baseHeight = Math.max(1, Math.round(image.naturalHeight * initialScale));
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+
+  if (!ctx) {
+    throw new Error('Unable to initialize image processing.');
+  }
+
+  let quality = 0.86;
+  let scale = 1;
+  let bestBlob: Blob | null = null;
+
+  for (let attempt = 0; attempt < 8; attempt += 1) {
+    canvas.width = Math.max(1, Math.round(baseWidth * scale));
+    canvas.height = Math.max(1, Math.round(baseHeight * scale));
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+    const blob = await canvasToBlob(canvas, 'image/webp', quality);
+    bestBlob = blob;
+
+    if (blob.size <= MAX_FUNCTION_UPLOAD_BYTES) {
+      break;
+    }
+
+    if (quality > 0.58) {
+      quality -= 0.08;
+    } else {
+      scale *= 0.85;
+    }
+  }
+
+  if (!bestBlob || bestBlob.size > MAX_FUNCTION_UPLOAD_BYTES) {
+    throw new Error('Could not compress this image below 4MB. Please choose a smaller image.');
+  }
+
+  const baseName = file.name.replace(/\.[^/.]+$/, '').trim().replace(/\s+/g, '-').toLowerCase() || 'image';
+  return new File([bestBlob], `${baseName}.webp`, { type: 'image/webp' });
 }
 
 export default function AdminContentEditorPage() {
@@ -250,8 +346,9 @@ export default function AdminContentEditorPage() {
   };
 
   const uploadImageFile = async (file: File): Promise<string> => {
+    const optimizedFile = await prepareImageForUpload(file);
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', optimizedFile);
 
     const res = await fetch('/api/admin/upload', {
       method: 'POST',
