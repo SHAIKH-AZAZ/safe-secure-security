@@ -33,6 +33,7 @@ import {
   IconShield,
 } from '@/components/icons';
 import styles from './HeroSection.module.css';
+import type { HeroContent } from '@/lib/admin-api';
 
 type TabId = 'person' | 'event' | 'site';
 
@@ -91,7 +92,7 @@ function FieldError({ field, errors }: { field: LeadFormKey; errors: LeadFormErr
   return <span className="field-error">{errors[field]}</span>;
 }
 
-export default function HeroSection() {
+export default function HeroSection({ hero }: { hero: HeroContent }) {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabId>('person');
   const [form, setForm] = useState<LeadFormState>(INITIAL_FORM);
@@ -148,26 +149,21 @@ export default function HeroSection() {
           </div>
 
           <h1 id="hero-headline" className={styles.headline}>
-            Tactical calm
-            <br />
-            for complex
-            <br />
-            <span className={styles.accentLine}>security moments.</span>
+            {hero.headline}
           </h1>
 
           <p className={styles.subheadline}>
-            Sentinel Security supports executives, events, and high-value properties with
-            brief-led planning, discreet teams, and measured response across Gujarat.
+            {hero.subheadline}
           </p>
 
           <div className={styles.ctaGroup}>
             <Link href="/contact" className={`btn btn-primary ${styles.ctaPrimary}`}>
-              Request Security Plan
+              {hero.ctaPrimary}
               <IconArrowRight size={16} />
             </Link>
             <Link href={SITE.phoneHref} className={`btn btn-outline ${styles.ctaSecondary}`}>
               <IconPhone size={15} />
-              Call Now
+              {hero.ctaSecondary}
             </Link>
           </div>
 

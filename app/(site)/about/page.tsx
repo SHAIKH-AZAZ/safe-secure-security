@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { IconArrowRight, IconCheck, IconShield } from '@/components/icons';
-import { PROOF_PILLARS } from '@/lib/constants';
+import { getSiteContent } from '@/lib/admin-api';
 import { buildMetadata, SITE } from '@/lib/site';
 import SectionReveal from '@/components/ui/SectionReveal';
 
@@ -27,7 +27,9 @@ const VALUES = [
   },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const content = await getSiteContent();
+
   return (
     <>
       <section className="page-hero">
@@ -90,7 +92,7 @@ export default function AboutPage() {
           </SectionReveal>
 
           <div className="page-grid-2">
-            {PROOF_PILLARS.map((pillar, index) => (
+            {content.proofPillars.map((pillar, index) => (
               <SectionReveal
                 key={pillar.id}
                 delay={index * 80}

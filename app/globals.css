@@ -543,3 +543,85 @@ select.field-input {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ========================================
+   Admin Dashboard Utilities
+   ======================================== */
+
+/* Admin page reset — prevents public site styles from bleeding into admin */
+.admin-page {
+  --admin-bg: var(--bg-primary);
+  --admin-card: var(--bg-card);
+  --admin-border: var(--border-subtle);
+}
+
+/* Admin typography utilities */
+.admin-text-gold { color: var(--gold); }
+.admin-text-muted { color: var(--text-muted); }
+.admin-text-success { color: var(--success); }
+.admin-text-danger { color: var(--danger); }
+.admin-text-sm { font-size: 0.85rem; }
+.admin-text-xs { font-size: 0.75rem; }
+
+/* Admin spacing utilities */
+.admin-mt-1 { margin-top: 0.5rem; }
+.admin-mt-2 { margin-top: 1rem; }
+.admin-mt-3 { margin-top: 1.5rem; }
+.admin-mb-1 { margin-bottom: 0.5rem; }
+.admin-mb-2 { margin-bottom: 1rem; }
+.admin-mb-3 { margin-bottom: 1.5rem; }
+.admin-gap-1 { gap: 0.5rem; }
+.admin-gap-2 { gap: 1rem; }
+
+/* Admin flex utilities */
+.admin-flex { display: flex; }
+.admin-flex-col { display: flex; flex-direction: column; }
+.admin-flex-wrap { flex-wrap: wrap; }
+.admin-items-center { align-items: center; }
+.admin-justify-between { justify-content: space-between; }
+.admin-justify-end { justify-content: flex-end; }
+
+/* Admin grid utilities */
+.admin-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+.admin-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.admin-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+
+@media (max-width: 768px) {
+  .admin-grid-2, .admin-grid-3, .admin-grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Admin divider */
+.admin-divider {
+  border: none;
+  border-top: 1px solid var(--border-subtle);
+  margin: 1.5rem 0;
+}
+
+/* Admin status dot indicator */
+.admin-status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+.admin-status-dot-new { background: var(--gold); }
+.admin-status-dot-active { background: var(--success); }
+.admin-status-dot-inactive { background: var(--danger); }
+
+/* Admin image preview */
+.admin-img-preview {
+  max-width: 200px;
+  max-height: 150px;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+  object-fit: cover;
+}
+
+/* Admin scrollbar styling */
+.admin-page ::-webkit-scrollbar { width: 6px; }
+.admin-page ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+.admin-page ::-webkit-scrollbar-thumb { background: var(--border-subtle); border-radius: 3px; }
+.admin-page ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }

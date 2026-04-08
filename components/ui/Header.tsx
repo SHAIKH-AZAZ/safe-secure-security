@@ -4,11 +4,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { IconClose, IconMenu, IconPhone } from '@/components/icons';
-import { NAV_LINKS } from '@/lib/constants';
+import { NavLink } from '@/lib/types';
 import { SITE } from '@/lib/site';
 import styles from './Header.module.css';
 
-export default function Header() {
+export default function Header({ navLinks }: { navLinks: NavLink[] }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -44,7 +44,7 @@ export default function Header() {
         </Link>
 
         <ul className={styles.navLinks} role="list">
-          {NAV_LINKS.map((link) => (
+          {navLinks.map((link) => (
             <li key={link.label}>
               <Link href={link.href} className={styles.navLink}>
                 {link.label}
@@ -76,7 +76,7 @@ export default function Header() {
       {menuOpen && (
         <div className={styles.mobileMenu} aria-modal="true" role="dialog">
           <ul className={styles.mobileLinks} role="list">
-            {NAV_LINKS.map((link) => (
+            {navLinks.map((link) => (
               <li key={link.label}>
                 <Link href={link.href} className={styles.mobileLink} onClick={() => setMenuOpen(false)}>
                   {link.label}

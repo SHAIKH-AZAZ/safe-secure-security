@@ -1,14 +1,15 @@
 import type { Metadata } from 'next';
 import { Barlow_Condensed, Inter } from 'next/font/google';
-import { SpeedInsights } from '@vercel/speed-insights/next';
-import './globals.css';
+import '../globals.css';
 import Footer from '@/components/ui/Footer';
 import Header from '@/components/ui/Header';
 import JsonLd from '@/components/ui/JsonLd';
 import MobileBar from '@/components/ui/MobileBar';
 import UtilityBar from '@/components/ui/UtilityBar';
-import { CITIES } from '@/lib/constants';
+import { getSiteContent } from '@/lib/admin-api';
 import { SITE } from '@/lib/site';
+
+export const dynamic = 'force-dynamic';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -59,47 +60,52 @@ export const metadata: Metadata = {
   },
 };
 
-const organizationJsonLd = [
-  {
-    '@context': 'https://schema.org',
-    '@type': 'ProfessionalService',
-    name: SITE.name,
-    url: SITE.url,
-    description: SITE.description,
-    email: SITE.email,
-    telephone: SITE.phoneRaw,
-    areaServed: ['Gujarat', ...CITIES.map((city) => city.name)],
-    contactPoint: [
-      {
-        '@type': 'ContactPoint',
-        contactType: 'customer support',
-        telephone: SITE.phoneRaw,
-        email: SITE.email,
-        availableLanguage: ['English'],
-      },
-    ],
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: SITE.name,
-    url: SITE.url,
-  },
-];
+function generateOrganizationJsonLd(cityNames: string[]) {
+  return [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ProfessionalService',
+      name: SITE.name,
+      url: SITE.url,
+      description: SITE.description,
+      email: SITE.email,
+      telephone: SITE.phoneRaw,
+      areaServed: ['Gujarat', ...cityNames],
+      contactPoint: [
+        {
+          '@type': 'ContactPoint',
+          contactType: 'customer support',
+          telephone: SITE.phoneRaw,
+          email: SITE.email,
+          availableLanguage: ['English'],
+        },
+      ],
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: SITE.name,
+      url: SITE.url,
+    },
+  ];
+}
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const content = await getSiteContent();
+  const organizationJsonLd = generateOrganizationJsonLd(content.cities.map((city) => city.name));
+
   return (
     <html lang="en" className={`${inter.variable} ${barlowCondensed.variable}`}>
       <body>
         <JsonLd data={organizationJsonLd} />
         <UtilityBar />
-        <Header />
+        <Header navLinks={content.navLinks} />
         <main id="main-content">{children}</main>
-        <Footer />
+        <Footer cities={content.cities} />
         <MobileBar />
         <SpeedInsights />
       </body>

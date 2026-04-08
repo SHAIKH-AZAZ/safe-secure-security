@@ -1,4 +1,4 @@
-import { CITIES } from '@/lib/constants';
+import { City } from '@/lib/types';
 import styles from './CoverageMap.module.css';
 
 const CONNECTIONS = [
@@ -11,11 +11,11 @@ const CONNECTIONS = [
   ['Ahmedabad', 'Bhavnagar'],
 ] as const;
 
-function cityByName(name: string) {
-  return CITIES.find((city) => city.name === name);
+function cityByName(name: string, cities: City[]) {
+  return cities.find((city) => city.name === name);
 }
 
-export default function CoverageMap() {
+export default function CoverageMap({ cities }: { cities: City[] }) {
   return (
     <div className={styles.panel}>
       <div className={styles.header}>
@@ -37,8 +37,8 @@ export default function CoverageMap() {
         <rect x="0" y="0" width="780" height="430" rx="16" fill="rgba(13, 14, 16, 0.45)" />
 
         {CONNECTIONS.map(([fromName, toName]) => {
-          const from = cityByName(fromName);
-          const to = cityByName(toName);
+          const from = cityByName(fromName, cities);
+          const to = cityByName(toName, cities);
 
           if (!from || !to) {
             return null;
@@ -56,7 +56,7 @@ export default function CoverageMap() {
           );
         })}
 
-        {CITIES.map((city) => (
+        {cities.map((city) => (
           <g key={city.name} transform={`translate(${city.x}, ${city.y})`}>
             <circle r="14" className={styles.nodeRing} />
             <circle r="4" className={styles.nodeCore} />

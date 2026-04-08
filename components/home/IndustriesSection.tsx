@@ -1,9 +1,9 @@
-import { INDUSTRIES } from '@/lib/constants';
 import { ICON_MAP } from '@/components/icons';
 import SectionReveal from '@/components/ui/SectionReveal';
 import styles from './IndustriesSection.module.css';
+import type { Industry } from '@/lib/admin-api';
 
-export default function IndustriesSection() {
+export default function IndustriesSection({ industries }: { industries: Industry[] }) {
   return (
     <section id="industries" className={`section ${styles.section}`} aria-labelledby="industries-heading">
       <div className="container">
@@ -19,7 +19,7 @@ export default function IndustriesSection() {
         </SectionReveal>
 
         <div className={styles.grid} role="list">
-          {INDUSTRIES.map((industry, i) => {
+          {industries.map((industry, i) => {
             const IconComp = ICON_MAP[industry.icon] || ICON_MAP['shield'];
             return (
               <SectionReveal

@@ -1,8 +1,8 @@
-import { CASE_STUDIES } from '@/lib/constants';
 import SectionReveal from '@/components/ui/SectionReveal';
 import styles from './CaseStudies.module.css';
+import type { CaseStudy } from '@/lib/admin-api';
 
-export default function CaseStudies() {
+export default function CaseStudies({ studies }: { studies: CaseStudy[] }) {
   return (
     <section id="case-studies" className={`section ${styles.section}`} aria-labelledby="cs-heading">
       <div className="container">
@@ -18,7 +18,7 @@ export default function CaseStudies() {
         </SectionReveal>
 
         <div className={styles.grid} role="list">
-          {CASE_STUDIES.map((cs, i) => (
+          {studies.map((cs, i) => (
             <SectionReveal
               key={cs.id}
               delay={i * 100}
