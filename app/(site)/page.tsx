@@ -17,12 +17,13 @@ import { buildMetadata, SITE } from '@/lib/site';
 
 export const metadata: Metadata = buildMetadata({
   description:
-    'Sentinel Security delivers executive protection, event coverage, and property guarding across Gujarat through a premium, brief-led security model.',
+    'Sentinel Security delivers VIP security, celebrity protection, executive protection, event coverage, and premium guarding across Gujarat through a brief-led security model.',
   path: '/',
 });
 
 export default async function HomePage() {
   const content = await getSiteContent();
+  const services = content.serviceClusters.flatMap((cluster) => cluster.services);
 
   const homeJsonLd = {
     '@context': 'https://schema.org',
@@ -32,14 +33,12 @@ export default async function HomePage() {
     description: SITE.description,
     mainEntity: {
       '@type': 'ItemList',
-      itemListElement: content.serviceClusters.flatMap((cluster, clusterIndex) =>
-        cluster.services.map((service, serviceIndex) => ({
-          '@type': 'ListItem',
-          position: clusterIndex * 3 + serviceIndex + 1,
-          name: service.name,
-          url: `${SITE.url}${service.href}`,
-        }))
-      ),
+      itemListElement: services.map((service, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: service.name,
+        url: `${SITE.url}${service.href}`,
+      })),
     },
   };
 

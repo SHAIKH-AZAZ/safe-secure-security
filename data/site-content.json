@@ -1,9 +1,9 @@
 {
   "hero": {
-    "headline": "Executive Protection, Event Security & Property Guarding",
-    "subheadline": "Supervisor-led teams for Gujarat's corporate, hospitality, and private-client environments. Discreet, documented, and deployment-ready.",
-    "ctaPrimary": "Request a Consultation",
-    "ctaSecondary": "Explore Services",
+    "headline": "VIP Security, Event Protection & Premium Guarding",
+    "subheadline": "Supervisor-led teams for executives, celebrities, private principals, venues, and high-value sites across Gujarat. Discreet, documented, and deployment-ready, with licensed armed support discussed where permitted.",
+    "ctaPrimary": "Request a Security Plan",
+    "ctaSecondary": "Call Operations Desk",
     "backgroundImage": ""
   },
   "serviceClusters": [
@@ -22,6 +22,30 @@
           ],
           "href": "/executive-protection",
           "icon": "shield"
+        },
+        {
+          "id": "vip-security",
+          "name": "VIP Security",
+          "description": "Protection for high-visibility guests, dignitaries, wedding principals, and business leaders who need polished arrival and movement control.",
+          "tags": [
+            "High-visibility briefs",
+            "Arrival control",
+            "Travel-ready"
+          ],
+          "href": "/vip-celebrity-security",
+          "icon": "star-shield"
+        },
+        {
+          "id": "celebrity-guard-services",
+          "name": "Celebrity Guard Services",
+          "description": "Low-profile celebrity guards for actors, artists, influencers, and public personalities across appearances, shoots, and live events.",
+          "tags": [
+            "Public appearances",
+            "Backstage support",
+            "Fan-control aware"
+          ],
+          "href": "/vip-celebrity-security",
+          "icon": "crowd"
         },
         {
           "id": "family-office-security",
@@ -46,6 +70,18 @@
           ],
           "href": "/executive-protection",
           "icon": "route"
+        },
+        {
+          "id": "licensed-gunman-support",
+          "name": "Licensed Gunman Support",
+          "description": "Armed-security support discussed for eligible assignments where licensing, local law, and duty profile permit.",
+          "tags": [
+            "Compliance-led",
+            "High-risk brief",
+            "Escort-ready"
+          ],
+          "href": "/vip-celebrity-security",
+          "icon": "shield"
         }
       ]
     },
@@ -265,6 +301,11 @@
       "answer": "Pricing depends on staffing profile, coverage hours, travel, location complexity, and supervisory requirements. Sentinel provides written proposals after reviewing the actual brief."
     },
     {
+      "id": "vip-and-armed-support",
+      "question": "Do you provide VIP security, celebrity guards, or gunman support?",
+      "answer": "Yes. VIP protection and celebrity guard assignments can be scoped around travel, appearances, residences, and event movement. Where armed or gunman support is requested, Sentinel reviews the assignment case-by-case and confirms licensing, legal, and deployment requirements before proposing coverage."
+    },
+    {
       "id": "documentation",
       "question": "What documentation supports an assignment?",
       "answer": "Assignments are supported by written scope confirmation, staffing plans where required, and reporting or incident documentation appropriate to the deployment. Any specific licensing or compliance language should be verified before launch."
@@ -437,7 +478,7 @@
   ],
   "site": {
     "name": "Safe & Security Service",
-    "description": "Premium executive protection, event security, and property guarding for leaders, venues, and high-value sites across Gujarat.",
+    "description": "Premium VIP security, celebrity guard services, executive protection, event security, and site guarding for private clients, venues, and high-value sites across Gujarat.",
     "phoneDisplay": "+91 9998727695",
     "email": "safesecuresecurityservice@gmail.com"
   },

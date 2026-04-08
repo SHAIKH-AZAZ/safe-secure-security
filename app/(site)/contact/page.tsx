@@ -6,7 +6,7 @@ import { buildMetadata } from '@/lib/site';
 export const metadata: Metadata = buildMetadata({
   title: 'Request a Security Plan',
   description:
-    'Use Sentinel Security’s full quote form for executive protection, event coverage, corporate guarding, and site-security planning.',
+    'Use Sentinel Security’s full quote form for VIP security, celebrity guards, executive protection, event coverage, and site-security planning.',
   path: '/contact',
 });
 

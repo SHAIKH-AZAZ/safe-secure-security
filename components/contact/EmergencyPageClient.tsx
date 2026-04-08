@@ -198,7 +198,10 @@ export default function EmergencyPageClient() {
                           aria-invalid={errors.service_type ? 'true' : 'false'}
                         >
                           <option value="">Select requirement</option>
+                          <option value="VIP security">VIP security</option>
+                          <option value="Celebrity guard services">Celebrity guard services</option>
                           <option value="Executive protection">Executive protection</option>
+                          <option value="Licensed gunman support">Licensed gunman support</option>
                           <option value="Event and venue security">Event or venue support</option>
                           <option value="Corporate and property guarding">Urgent site guarding</option>
                           <option value="Security consulting and assessment">Immediate security assessment</option>

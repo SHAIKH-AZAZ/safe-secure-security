@@ -7,7 +7,7 @@ import SectionReveal from '@/components/ui/SectionReveal';
 export const metadata: Metadata = buildMetadata({
   title: 'Executive Protection',
   description:
-    'Discreet protection planning for principals, executives, family-office stakeholders, and privacy-sensitive travel schedules.',
+    'Discreet protection planning for principals, executives, VIP guests, family-office stakeholders, and privacy-sensitive travel schedules.',
   path: '/executive-protection',
 });
 
@@ -50,8 +50,8 @@ export default function ExecutiveProtectionPage() {
               <span style={{ color: 'var(--gold)' }}>a discreet operating model.</span>
             </h1>
             <p className="page-description">
-              Sentinel builds close-protection plans around schedules, locations, sensitivities, and
-              the amount of visible security the brief can tolerate.
+              Sentinel builds close-protection plans around executive schedules, VIP movement,
+              locations, sensitivities, and the amount of visible security the brief can tolerate.
             </p>
             <div className="page-actions">
               <Link href="/contact" className="btn btn-primary">

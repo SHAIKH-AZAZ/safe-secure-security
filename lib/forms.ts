@@ -74,7 +74,10 @@ export const URGENCY_OPTIONS = [
 export const CONTACT_METHOD_OPTIONS = ['Phone call', 'SMS', 'Email', 'WhatsApp'] as const;
 
 export const SERVICE_OPTIONS = [
+  'VIP security',
+  'Celebrity guard services',
   'Executive protection',
+  'Licensed gunman support',
   'Event and venue security',
   'Corporate and property guarding',
   'Residential estate security',
@@ -84,6 +87,7 @@ export const SERVICE_OPTIONS = [
 
 export const CLIENT_SEGMENT_OPTIONS = [
   'Private principal or family office',
+  'Talent manager or celebrity team',
   'Corporate operations or facilities',
   'Event producer or venue team',
   'Property manager or developer',

@@ -50,7 +50,7 @@ const TAB_CONFIG: Record<
   person: {
     label: 'Protect a Person',
     icon: IconShield,
-    summary: 'Executive and family-office protection with discreet travel support.',
+    summary: 'Executive, VIP, and celebrity protection with discreet travel support.',
     serviceType: 'Executive protection',
     clientSegment: 'Private principal or family office',
   },
