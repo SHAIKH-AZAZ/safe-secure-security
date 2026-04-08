@@ -1,5 +1,6 @@
 // Admin authentication utilities using HMAC-signed cookies
 // Uses Web Crypto API (crypto.subtle) for HMAC operations
+import { timingSafeEqual } from 'node:crypto';
 
 export const COOKIE_NAME = 'admin_session';
 export const COOKIE_MAX_AGE = 86400; // 24 hours in seconds
@@ -30,7 +31,18 @@ export function verifyPassword(password: string): boolean {
   if (!adminPassword) {
     throw new Error('ADMIN_PASSWORD environment variable is not set');
   }
-  return password === adminPassword;
+
+  const expected = Buffer.from(adminPassword);
+  const provided = Buffer.from(password);
+
+  if (provided.length !== expected.length) {
+    const padded = Buffer.alloc(expected.length);
+    provided.copy(padded, 0, 0, Math.min(provided.length, expected.length));
+    timingSafeEqual(expected, padded);
+    return false;
+  }
+
+  return timingSafeEqual(expected, provided);
 }
 
 /**

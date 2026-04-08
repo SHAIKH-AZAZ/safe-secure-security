@@ -10,6 +10,7 @@ import ServiceGrid from '@/components/home/ServiceGrid';
 import Testimonials from '@/components/home/Testimonials';
 import Ticker from '@/components/home/Ticker';
 import TrustStrip from '@/components/home/TrustStrip';
+import UpdatesSection from '@/components/home/UpdatesSection';
 import WhySentinel from '@/components/home/WhySentinel';
 import JsonLd from '@/components/ui/JsonLd';
 import { getSiteContent } from '@/lib/admin-api';
@@ -52,6 +53,7 @@ export default async function HomePage() {
       <IndustriesSection industries={content.industries} />
       <WhySentinel pillars={content.proofPillars} />
       <ImageShowcase items={content.imageShowcase ?? []} />
+      <UpdatesSection items={content.achievementUpdates ?? []} />
       <CaseStudies studies={content.caseStudies} />
       <ProcessSection steps={content.processSteps} />
       <Testimonials testimonials={content.testimonials} />

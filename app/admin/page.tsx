@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import styles from './admin.module.css';
+import { normalizeSiteContent } from '@/lib/site-content';
 import type {
   SiteContent,
   ServiceCluster,
@@ -9,13 +10,14 @@ import type {
   FaqItem,
   Testimonial,
   ImageShowcaseItem,
+  AchievementUpdateItem,
   Industry,
   CaseStudy,
   ProofPillar,
   ProcessStep,
 } from '@/lib/admin-api';
 
-type TabId = 'general' | 'hero' | 'images' | 'services' | 'faq' | 'testimonials' | 'other';
+type TabId = 'general' | 'hero' | 'images' | 'updates' | 'services' | 'faq' | 'testimonials' | 'other';
 
 interface Toast {
   id: string;
@@ -38,13 +40,57 @@ function createEmptyShowcaseItem() {
   } as ImageShowcaseItem;
 }
 
+function createEmptyAchievementUpdate() {
+  return {
+    id: `update-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+    imageUrl: '',
+    tag: '',
+    dateValue: '',
+    dateLabel: '',
+    title: '',
+    description: '',
+  } as AchievementUpdateItem;
+}
+
+function parseDateValue(value: string): string {
+  const trimmed = value.trim();
+  if (!trimmed) return '';
+
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+    return trimmed;
+  }
+
+  const slashMatch = trimmed.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (slashMatch) {
+    const [, day, month, year] = slashMatch;
+    return `${year}-${month}-${day}`;
+  }
+
+  return '';
+}
+
+function formatDateLabel(dateValue: string): string {
+  const parsed = parseDateValue(dateValue);
+  if (!parsed) return '';
+
+  const [year, month, day] = parsed.split('-').map(Number);
+  return new Intl.DateTimeFormat('en-IN', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  }).format(new Date(year, month - 1, day));
+}
+
 function normalizeContentResponse(value: unknown): SiteContent {
-  const content = value as Partial<SiteContent>;
-  const imageShowcase = Array.isArray(content.imageShowcase) ? content.imageShowcase : [];
+  const content = normalizeSiteContent(value);
+  const achievementUpdates = content.achievementUpdates.map((item) => ({
+        ...item,
+        dateValue: item.dateValue || parseDateValue(item.dateLabel || ''),
+      }));
   return {
     ...content,
-    imageShowcase,
-  } as SiteContent;
+    achievementUpdates,
+  };
 }
 
 function canvasToBlob(canvas: HTMLCanvasElement, type: string, quality: number): Promise<Blob> {
@@ -179,6 +225,16 @@ export default function AdminContentEditorPage() {
             item.role.trim()
           );
         }),
+        achievementUpdates: content.achievementUpdates.filter((item) => {
+          return Boolean(
+            item.imageUrl.trim() ||
+            item.tag.trim() ||
+            (item.dateValue || '').trim() ||
+            item.dateLabel.trim() ||
+            item.title.trim() ||
+            item.description.trim()
+          );
+        }),
       };
       const res = await fetch('/api/admin/content', {
         method: 'POST',
@@ -242,6 +298,38 @@ export default function AdminContentEditorPage() {
     const [moved] = items.splice(fromIndex, 1);
     items.splice(toIndex, 0, moved);
     setContent({ ...content, imageShowcase: items });
+  };
+
+  const updateAchievementUpdate = (index: number, updates: Partial<AchievementUpdateItem>) => {
+    if (!content) return;
+    const items = [...content.achievementUpdates];
+    items[index] = { ...items[index], ...updates };
+    setContent({ ...content, achievementUpdates: items });
+  };
+
+  const addAchievementUpdate = (initial?: Partial<AchievementUpdateItem>) => {
+    if (!content) return;
+    const newItem = { ...createEmptyAchievementUpdate(), ...initial };
+    setContent({ ...content, achievementUpdates: [...content.achievementUpdates, newItem] });
+    return newItem.id;
+  };
+
+  const removeAchievementUpdate = (index: number) => {
+    if (!content) return;
+    const items = content.achievementUpdates.filter((_, i) => i !== index);
+    setContent({ ...content, achievementUpdates: items });
+  };
+
+  const reorderAchievementUpdates = (fromIndex: number, toIndex: number) => {
+    if (!content) return;
+    if (fromIndex < 0 || toIndex < 0) return;
+    if (fromIndex >= content.achievementUpdates.length || toIndex >= content.achievementUpdates.length) return;
+    if (fromIndex === toIndex) return;
+
+    const items = [...content.achievementUpdates];
+    const [moved] = items.splice(fromIndex, 1);
+    items.splice(toIndex, 0, moved);
+    setContent({ ...content, achievementUpdates: items });
   };
 
   const updateServiceCluster = (index: number, updates: Partial<ServiceCluster>) => {
@@ -394,6 +482,7 @@ export default function AdminContentEditorPage() {
     { id: 'general', label: 'General' },
     { id: 'hero', label: 'Hero' },
     { id: 'images', label: 'Images' },
+    { id: 'updates', label: 'Updates' },
     { id: 'services', label: 'Services' },
     { id: 'faq', label: 'FAQ' },
     { id: 'testimonials', label: 'Testimonials' },
@@ -464,6 +553,16 @@ export default function AdminContentEditorPage() {
             removeItem={removeImageShowcaseItem}
             reorderItems={reorderImageShowcaseItems}
             uploadShowcaseImage={uploadShowcaseImage}
+          />
+        )}
+        {activeTab === 'updates' && (
+          <UpdatesTab
+            items={content.achievementUpdates}
+            updateItem={updateAchievementUpdate}
+            addItem={addAchievementUpdate}
+            removeItem={removeAchievementUpdate}
+            reorderItems={reorderAchievementUpdates}
+            uploadUpdateImage={uploadShowcaseImage}
           />
         )}
         {activeTab === 'services' && (
@@ -986,6 +1085,384 @@ function ImageShowcaseTab({
 
         <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={createNewCard}>
           Create Showcase Card
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function UpdatesTab({
+  items,
+  updateItem,
+  addItem,
+  removeItem,
+  reorderItems,
+  uploadUpdateImage,
+}: {
+  items: AchievementUpdateItem[];
+  updateItem: (index: number, updates: Partial<AchievementUpdateItem>) => void;
+  addItem: (initial?: Partial<AchievementUpdateItem>) => string | undefined;
+  removeItem: (index: number) => void;
+  reorderItems: (fromIndex: number, toIndex: number) => void;
+  uploadUpdateImage: (file: File) => Promise<string | null>;
+}) {
+  const [dragIndex, setDragIndex] = useState<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(items[0]?.id ?? null);
+  const [uploadingExisting, setUploadingExisting] = useState(false);
+  const [uploadingNew, setUploadingNew] = useState(false);
+  const [newItemForm, setNewItemForm] = useState({
+    imageUrl: '',
+    tag: '',
+    dateValue: '',
+    dateLabel: '',
+    title: '',
+    description: '',
+  });
+
+  const onDragStart = (index: number) => {
+    setDragIndex(index);
+  };
+
+  const onDragEnter = (index: number) => {
+    if (dragIndex === null || dragIndex === index) return;
+    if (dragOverIndex === index) return;
+    setDragOverIndex(index);
+  };
+
+  const onDrop = (index: number) => {
+    if (dragIndex === null) return;
+    reorderItems(dragIndex, index);
+    setDragIndex(null);
+    setDragOverIndex(null);
+  };
+
+  const onDragEnd = () => {
+    setDragIndex(null);
+    setDragOverIndex(null);
+  };
+
+  useEffect(() => {
+    if (items.length === 0) {
+      setSelectedId(null);
+      return;
+    }
+
+    if (!selectedId || !items.some((item) => item.id === selectedId)) {
+      setSelectedId(items[0].id);
+    }
+  }, [items, selectedId]);
+
+  const selectedIndex = selectedId ? items.findIndex((item) => item.id === selectedId) : -1;
+  const selectedItem = selectedIndex >= 0 ? items[selectedIndex] : null;
+
+  const updateNewField = (
+    field: 'imageUrl' | 'tag' | 'dateValue' | 'dateLabel' | 'title' | 'description',
+    value: string
+  ) => {
+    setNewItemForm((current) => ({ ...current, [field]: value }));
+  };
+
+  const createNewCard = () => {
+    const payload = {
+      imageUrl: newItemForm.imageUrl.trim(),
+      tag: newItemForm.tag.trim(),
+      dateValue: newItemForm.dateValue.trim(),
+      dateLabel: newItemForm.dateLabel.trim(),
+      title: newItemForm.title.trim(),
+      description: newItemForm.description.trim(),
+    };
+
+    if (!payload.imageUrl && !payload.tag && !payload.dateLabel && !payload.title && !payload.description) {
+      return;
+    }
+
+    const createdId = addItem(payload);
+    if (createdId) {
+      setSelectedId(createdId);
+    }
+
+    setNewItemForm({
+        imageUrl: '',
+        tag: '',
+        dateValue: '',
+        dateLabel: '',
+        title: '',
+        description: '',
+    });
+  };
+
+  const uploadForExistingCard = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file || selectedIndex < 0) return;
+
+    setUploadingExisting(true);
+    const url = await uploadUpdateImage(file);
+    if (url) {
+      updateItem(selectedIndex, { imageUrl: url });
+    }
+    setUploadingExisting(false);
+  };
+
+  const uploadForNewCard = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setUploadingNew(true);
+    const url = await uploadUpdateImage(file);
+    if (url) {
+      updateNewField('imageUrl', url);
+    }
+    setUploadingNew(false);
+  };
+
+  const removeSelectedCard = () => {
+    if (selectedIndex < 0) return;
+    removeItem(selectedIndex);
+  };
+
+  const moveSelectedUp = () => {
+    if (selectedIndex <= 0) return;
+    reorderItems(selectedIndex, selectedIndex - 1);
+  };
+
+  const moveSelectedDown = () => {
+    if (selectedIndex < 0 || selectedIndex >= items.length - 1) return;
+    reorderItems(selectedIndex, selectedIndex + 1);
+  };
+
+  return (
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+        <h3 style={{ color: '#f0ebe0', fontSize: '1.1rem' }}>Achievements & Updates</h3>
+        <span className={styles.badgeSubtleCount}>{items.length} cards</span>
+      </div>
+      <p className={styles.reorderHint}>
+        Add homepage updates here. Each card can include a photo, label, date, title, and short description.
+      </p>
+
+      <div className={styles.showcaseCardGrid}>
+        {items.map((item, index) => (
+          <article
+            key={item.id}
+            className={`${styles.showcaseItemCard} ${styles.sortableCard} ${
+              dragIndex === index ? styles.sortableCardDragging : ''
+            } ${dragOverIndex === index ? styles.sortableCardOver : ''} ${
+              selectedId === item.id ? styles.showcaseItemCardSelected : ''
+            }`}
+            draggable
+            onDragStart={() => onDragStart(index)}
+            onDragEnter={() => onDragEnter(index)}
+            onDragOver={(event) => event.preventDefault()}
+            onDrop={() => onDrop(index)}
+            onDragEnd={onDragEnd}
+          >
+            <div className={styles.showcaseItemTop}>
+              <span className={styles.dragHandle} title="Drag to reorder" aria-hidden="true">::</span>
+              <span className={styles.showcaseOrder}>#{index + 1}</span>
+            </div>
+            <div className={styles.showcaseThumb}>
+              {item.imageUrl ? (
+                <img
+                  src={item.imageUrl}
+                  alt={`${item.title || `Update ${index + 1}`} preview`}
+                  className={styles.showcaseThumbImage}
+                />
+              ) : (
+                <div className={styles.showcaseThumbPlaceholder}>No image</div>
+              )}
+            </div>
+            <div className={styles.showcaseItemBody}>
+              <p className={styles.showcaseRole}>{item.tag || 'Update label not set'}</p>
+              <p className={styles.showcaseName}>{item.title || 'Untitled update'}</p>
+              <p className={styles.showcaseQuote}>{item.description || 'No description added yet.'}</p>
+            </div>
+            <div className={styles.showcaseActions}>
+              <button
+                className={`${styles.btn} ${styles.btnOutline} ${styles.btnSmall}`}
+                onClick={() => setSelectedId(item.id)}
+              >
+                Edit
+              </button>
+              <button
+                className={`${styles.btn} ${styles.btnDanger} ${styles.btnSmall}`}
+                onClick={() => removeItem(index)}
+              >
+                Remove
+              </button>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      {selectedItem ? (
+        <div className={styles.showcaseEditorPanel}>
+          <div className={styles.showcaseEditorHeader}>
+            <h4 className={styles.showcaseEditorTitle}>Edit Selected Update</h4>
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              <button
+                className={`${styles.btn} ${styles.btnOutline} ${styles.btnSmall}`}
+                onClick={moveSelectedUp}
+                disabled={selectedIndex <= 0}
+              >
+                Move Up
+              </button>
+              <button
+                className={`${styles.btn} ${styles.btnOutline} ${styles.btnSmall}`}
+                onClick={moveSelectedDown}
+                disabled={selectedIndex < 0 || selectedIndex >= items.length - 1}
+              >
+                Move Down
+              </button>
+              <button
+                className={`${styles.btn} ${styles.btnDanger} ${styles.btnSmall}`}
+                onClick={removeSelectedCard}
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Image URL</label>
+            <input
+              type="text"
+              className={styles.formInput}
+              value={selectedItem.imageUrl}
+              onChange={(e) => updateItem(selectedIndex, { imageUrl: e.target.value })}
+              placeholder="/uploads/filename.jpg"
+            />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={uploadForExistingCard}
+              style={{ marginTop: '0.75rem', color: '#d1c8ba' }}
+              disabled={uploadingExisting}
+            />
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Tag</label>
+              <input
+                type="text"
+                className={styles.formInput}
+                value={selectedItem.tag}
+                onChange={(e) => updateItem(selectedIndex, { tag: e.target.value })}
+                placeholder="Field Achievement"
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Date</label>
+              <input
+                type="date"
+                className={styles.formInput}
+                value={selectedItem.dateValue || ''}
+                onChange={(e) =>
+                  updateItem(selectedIndex, {
+                    dateValue: e.target.value,
+                    dateLabel: formatDateLabel(e.target.value),
+                  })
+                }
+              />
+            </div>
+          </div>
+
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Title</label>
+            <input
+              type="text"
+              className={styles.formInput}
+              value={selectedItem.title}
+              onChange={(e) => updateItem(selectedIndex, { title: e.target.value })}
+              placeholder="Update title"
+            />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Description</label>
+            <textarea
+              className={`${styles.formInput} ${styles.formTextarea}`}
+              value={selectedItem.description}
+              onChange={(e) => updateItem(selectedIndex, { description: e.target.value })}
+              placeholder="Short update description"
+            />
+          </div>
+        </div>
+      ) : null}
+
+      <div className={styles.showcaseNewForm}>
+        <h4 className={styles.showcaseEditorTitle}>Create New Update</h4>
+        <p className={styles.reorderHint} style={{ marginBottom: '1rem' }}>
+          Upload a photo first or paste an uploaded image URL, then add the card copy.
+        </p>
+
+        <div className={styles.formGroup}>
+          <label className={styles.formLabel}>New Image URL</label>
+          <input
+            type="text"
+            className={styles.formInput}
+            value={newItemForm.imageUrl}
+            onChange={(e) => updateNewField('imageUrl', e.target.value)}
+            placeholder="/uploads/filename.jpg"
+          />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={uploadForNewCard}
+            style={{ marginTop: '0.75rem', color: '#d1c8ba' }}
+            disabled={uploadingNew}
+          />
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Tag</label>
+            <input
+              type="text"
+              className={styles.formInput}
+              value={newItemForm.tag}
+              onChange={(e) => updateNewField('tag', e.target.value)}
+              placeholder="Operations Update"
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Date</label>
+              <input
+                type="date"
+                className={styles.formInput}
+                value={newItemForm.dateValue || ''}
+                onChange={(e) => {
+                  updateNewField('dateValue', e.target.value);
+                  updateNewField('dateLabel', formatDateLabel(e.target.value));
+                }}
+              />
+          </div>
+        </div>
+
+        <div className={styles.formGroup}>
+          <label className={styles.formLabel}>Title</label>
+          <input
+            type="text"
+            className={styles.formInput}
+            value={newItemForm.title}
+            onChange={(e) => updateNewField('title', e.target.value)}
+            placeholder="New achievement title"
+          />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label className={styles.formLabel}>Description</label>
+          <textarea
+            className={`${styles.formInput} ${styles.formTextarea}`}
+            value={newItemForm.description}
+            onChange={(e) => updateNewField('description', e.target.value)}
+            placeholder="Short update description"
+          />
+        </div>
+
+        <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={createNewCard}>
+          Create Update Card
         </button>
       </div>
     </div>

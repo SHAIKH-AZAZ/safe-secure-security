@@ -1,133 +1,28 @@
 import fs from 'fs';
 import path from 'path';
 import clientPromise from './mongodb';
+import { normalizeSiteContent } from './site-content';
+import type { SiteContent } from './site-content';
 
 const SEED_PATH = path.join(process.cwd(), 'data', 'site-content.json');
 const IS_READ_ONLY_DEPLOYMENT = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production';
-
-// Service Item within a Service Cluster
-export interface ServiceItem {
-  id: string;
-  name: string;
-  description: string;
-  tags: string[];
-  href: string;
-  icon: string;
-}
-
-// Service Cluster containing related services
-export interface ServiceCluster {
-  id: string;
-  name: string;
-  services: ServiceItem[];
-}
-
-// Industry sector
-export interface Industry {
-  id: string;
-  name: string;
-  icon: string;
-  description: string;
-}
-
-// Client testimonial
-export interface Testimonial {
-  id: string;
-  quote: string;
-  clientType: string;
-  outcome: string;
-  location: string;
-}
-
-// Case study / portfolio item
-export interface CaseStudy {
-  id: string;
-  clientType: string;
-  problem: string;
-  solution: string;
-  result: string;
-  tag: string;
-}
-
-// FAQ item
-export interface FaqItem {
-  id: string;
-  question: string;
-  answer: string;
-}
-
-// Proof pillar (Why Us section)
-export interface ProofPillar {
-  id: string;
-  title: string;
-  label: string;
-  points: string[];
-}
-
-// Process step
-export interface ProcessStep {
-  number: string;
-  title: string;
-  description: string;
-}
-
-// City for coverage map
-export interface City {
-  name: string;
-  region: string;
-  coverageLabel: string;
-  x: number;
-  y: number;
-}
-
-// Navigation link
-export interface NavLink {
-  label: string;
-  href: string;
-}
-
-// Hero section content
-export interface HeroContent {
-  headline: string;
-  subheadline: string;
-  ctaPrimary: string;
-  ctaSecondary: string;
-  backgroundImage: string;
-}
-
-// Home page image showcase item
-export interface ImageShowcaseItem {
-  id: string;
-  imageUrl: string;
-  quote: string;
-  name: string;
-  role: string;
-}
-
-// Site metadata
-export interface SiteMetadata {
-  name: string;
-  description: string;
-  phoneDisplay: string;
-  email: string;
-}
-
-// Complete site content structure
-export interface SiteContent {
-  hero: HeroContent;
-  imageShowcase: ImageShowcaseItem[];
-  serviceClusters: ServiceCluster[];
-  industries: Industry[];
-  testimonials: Testimonial[];
-  caseStudies: CaseStudy[];
-  faqItems: FaqItem[];
-  proofPillars: ProofPillar[];
-  processSteps: ProcessStep[];
-  cities: City[];
-  navLinks: NavLink[];
-  trustStripItems: string[];
-  site: SiteMetadata;
-}
+export type {
+  AchievementUpdateItem,
+  CaseStudy,
+  City,
+  FaqItem,
+  HeroContent,
+  ImageShowcaseItem,
+  Industry,
+  NavLink,
+  ProcessStep,
+  ProofPillar,
+  ServiceCluster,
+  ServiceItem,
+  SiteContent,
+  SiteMetadata,
+  Testimonial,
+} from './site-content';
 
 function readSeedContent(): SiteContent {
   const raw = fs.readFileSync(SEED_PATH, 'utf-8');
@@ -161,14 +56,14 @@ export async function getSiteContent(): Promise<SiteContent> {
       }
 
       const { _id, ...content } = doc;
-      return content as unknown as SiteContent;
+      return normalizeSiteContent(content);
     }
   } catch (error) {
     console.warn('MongoDB unavailable, falling back to JSON file:', (error as Error).message);
   }
 
   // Fallback: read from JSON file
-  return readSeedContent();
+  return normalizeSiteContent(readSeedContent());
 }
 
 /**
@@ -177,6 +72,8 @@ export async function getSiteContent(): Promise<SiteContent> {
  * - Local/dev: falls back to JSON file when MongoDB is unavailable
  */
 export async function updateSiteContent(data: SiteContent): Promise<void> {
+  const normalized = normalizeSiteContent(data);
+
   // Prefer MongoDB in all environments
   try {
     if (clientPromise) {
@@ -185,7 +82,7 @@ export async function updateSiteContent(data: SiteContent): Promise<void> {
       const collection = db.collection('siteContent');
       await collection.replaceOne(
         { _id: 'main' as any },
-        { _id: 'main' as any, ...data },
+        { _id: 'main' as any, ...normalized },
         { upsert: true }
       );
       return;
@@ -200,5 +97,5 @@ export async function updateSiteContent(data: SiteContent): Promise<void> {
   }
 
   // Local/dev fallback
-  writeSeedContent(data);
+  writeSeedContent(normalized);
 }

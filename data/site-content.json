@@ -497,5 +497,23 @@
       "name": "samir",
       "role": "security bouncer"
     }
+  ],
+  "achievementUpdates": [
+    {
+      "id": "update-ops-briefing",
+      "imageUrl": "/uploads/1775496658752-vercel-ship-26-sticker-suitcase.jpg",
+      "tag": "Operations Update",
+      "dateLabel": "April 2026",
+      "title": "New VIP and executive briefing workflows added",
+      "description": "Our planning stack now supports faster intake for VIP movement, celebrity appearances, and premium escort briefs with clearer pre-deployment coordination."
+    },
+    {
+      "id": "update-event-team",
+      "imageUrl": "/uploads/1775495849793-ChatGPTImageApr1202610_28_31PM.png",
+      "tag": "Field Achievement",
+      "dateLabel": "April 2026",
+      "title": "Front-of-house and event response team expanded",
+      "description": "The field team can now support more guest-facing assignments with stronger arrival control, access discipline, and supervisor-led event coverage."
+    }
   ]
 }

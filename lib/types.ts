@@ -13,6 +13,16 @@ export interface ServiceItem {
   icon: string;
 }
 
+export interface AchievementUpdateItem {
+  id: string;
+  imageUrl: string;
+  tag: string;
+  dateValue?: string;
+  dateLabel: string;
+  title: string;
+  description: string;
+}
+
 export interface Industry {
   id: string;
   name: string;

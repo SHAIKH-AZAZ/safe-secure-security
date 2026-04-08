@@ -56,6 +56,7 @@ export default function ContactPageClient() {
   const [prefilled, setPrefilled] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitWarning, setSubmitWarning] = useState<string | null>(null);
 
   useEffect(() => {
     if (prefilled) {
@@ -75,6 +76,7 @@ export default function ContactPageClient() {
     setForm((current) => ({ ...current, [field]: value }));
     setErrors((current) => ({ ...current, [field]: undefined }));
     setSubmitError(null);
+    setSubmitWarning(null);
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -89,6 +91,7 @@ export default function ContactPageClient() {
 
     setSubmitting(true);
     setSubmitError(null);
+    setSubmitWarning(null);
 
     try {
       const response = await fetch('/api/contact', {
@@ -99,12 +102,15 @@ export default function ContactPageClient() {
         body: JSON.stringify(form),
       });
 
-      const result = (await response.json()) as { error?: string };
+      const result = (await response.json()) as { error?: string; warning?: string };
 
       if (!response.ok) {
         throw new Error(result.error || 'Unable to submit the request right now.');
       }
 
+      if (result.warning) {
+        setSubmitWarning(result.warning);
+      }
       setSubmitted(true);
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : 'Unable to submit the request right now.');
@@ -146,8 +152,9 @@ export default function ContactPageClient() {
                   </div>
                   <h2>Request captured</h2>
                   <p>
-                    Your request has been sent to the operations inbox. The team can now review the
-                    brief and follow up using your preferred contact method.
+                    {submitWarning
+                      ? submitWarning
+                      : 'Your request has been sent to the operations inbox. The team can now review the brief and follow up using your preferred contact method.'}
                   </p>
                   <Link href="/" className="btn btn-outline">
                     Return to home

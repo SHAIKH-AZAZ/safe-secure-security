@@ -43,11 +43,13 @@ export default function EmergencyPageClient() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitWarning, setSubmitWarning] = useState<string | null>(null);
 
   const updateField = (field: LeadFormKey, value: string) => {
     setForm((current) => ({ ...current, [field]: value }));
     setErrors((current) => ({ ...current, [field]: undefined }));
     setSubmitError(null);
+    setSubmitWarning(null);
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -62,6 +64,7 @@ export default function EmergencyPageClient() {
 
     setSubmitting(true);
     setSubmitError(null);
+    setSubmitWarning(null);
 
     try {
       const response = await fetch('/api/emergency', {
@@ -72,12 +75,15 @@ export default function EmergencyPageClient() {
         body: JSON.stringify(form),
       });
 
-      const result = (await response.json()) as { error?: string };
+      const result = (await response.json()) as { error?: string; warning?: string };
 
       if (!response.ok) {
         throw new Error(result.error || 'Unable to send the emergency request right now.');
       }
 
+      if (result.warning) {
+        setSubmitWarning(result.warning);
+      }
       setSubmitted(true);
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : 'Unable to send the emergency request right now.');
@@ -125,8 +131,9 @@ export default function EmergencyPageClient() {
                   </div>
                   <h2>Emergency brief recorded</h2>
                   <p>
-                    Your emergency brief has been sent to the monitored inbox so the operations team
-                    can triage it immediately.
+                    {submitWarning
+                      ? submitWarning
+                      : 'Your emergency brief has been sent to the monitored inbox so the operations team can triage it immediately.'}
                   </p>
                   <Link href="/" className="btn btn-outline">
                     Return to home
