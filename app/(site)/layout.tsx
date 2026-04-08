@@ -8,6 +8,7 @@ import MobileBar from '@/components/ui/MobileBar';
 import UtilityBar from '@/components/ui/UtilityBar';
 import { getSiteContent } from '@/lib/admin-api';
 import { SITE } from '@/lib/site';
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const dynamic = 'force-dynamic';
 
