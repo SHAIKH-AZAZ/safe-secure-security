@@ -3,10 +3,11 @@ import { verifyPassword, createSessionCookie, COOKIE_NAME, cookieConfig } from '
 
 export const runtime = 'nodejs';
 
-const FAILURE_DELAY_MS = 700;
+const IS_DEVELOPMENT = process.env.NODE_ENV !== 'production';
+const FAILURE_DELAY_MS = IS_DEVELOPMENT ? 0 : 300;
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
-const RATE_LIMIT_MAX_FAILURES = 5;
-const RATE_LIMIT_BLOCK_MS = 15 * 60 * 1000;
+const RATE_LIMIT_MAX_FAILURES = IS_DEVELOPMENT ? Number.POSITIVE_INFINITY : 6;
+const RATE_LIMIT_BLOCK_MS = 5 * 60 * 1000;
 
 type LoginAttemptState = {
   count: number;
@@ -29,8 +30,9 @@ function sleep(ms: number) {
 function getClientKey(req: NextRequest) {
   const forwardedFor = req.headers.get('x-forwarded-for');
   const realIp = req.headers.get('x-real-ip');
+  const userAgent = req.headers.get('user-agent') || 'unknown-agent';
   const ip = forwardedFor?.split(',')[0]?.trim() || realIp || 'unknown';
-  return ip;
+  return `${ip}:${userAgent}`;
 }
 
 function pruneLoginAttempts(now: number) {
@@ -92,12 +94,17 @@ export async function POST(req: NextRequest) {
   const clientKey = getClientKey(req);
   pruneLoginAttempts(now);
 
-  const currentRateLimit = getRateLimitState(clientKey, now);
+  const currentRateLimit = IS_DEVELOPMENT
+    ? { blocked: false, retryAfterMs: 0 }
+    : getRateLimitState(clientKey, now);
+
   if (currentRateLimit.blocked) {
     await sleep(FAILURE_DELAY_MS);
     const retryAfterSeconds = Math.ceil(currentRateLimit.retryAfterMs / 1000);
     return NextResponse.json(
-      { error: 'Too many failed login attempts. Please try again later.' },
+      {
+        error: `Too many failed login attempts. Please try again in about ${retryAfterSeconds} seconds.`,
+      },
       {
         status: 429,
         headers: {
@@ -125,13 +132,17 @@ export async function POST(req: NextRequest) {
 
   if (!verifyPassword(password.trim())) {
     recordFailedAttempt(clientKey, Date.now());
-    const nextState = getRateLimitState(clientKey, Date.now());
+    const nextState = IS_DEVELOPMENT
+      ? { blocked: false, retryAfterMs: 0 }
+      : getRateLimitState(clientKey, Date.now());
     await sleep(FAILURE_DELAY_MS);
 
     if (nextState.blocked) {
       const retryAfterSeconds = Math.ceil(nextState.retryAfterMs / 1000);
       return NextResponse.json(
-        { error: 'Too many failed login attempts. Please try again later.' },
+        {
+          error: `Too many failed login attempts. Please try again in about ${retryAfterSeconds} seconds.`,
+        },
         {
           status: 429,
           headers: {
